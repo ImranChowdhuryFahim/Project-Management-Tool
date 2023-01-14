@@ -2,6 +2,58 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - displayName
+ *         - email
+ *         - password
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: The auto-generated mongodb id of the user
+ *         displayName:
+ *           type: string
+ *           description: The displayable name of the user
+ *         email:
+ *           type: string
+ *           description: The email address of the user
+ *         avatarLink:
+ *           type: string
+ *           description: The gravatar link of the user
+ *         password:
+ *           type: string
+ *           description: The hash password of the user
+ *         projects:
+ *           type: array
+ *           description: The list of projects of the user
+ *           items:
+ *              type: string
+ *              description: The id of the project
+ *         workspaces:
+ *           type: array
+ *           description: The list of workspaces of the user
+ *           items:
+ *              type: string
+ *              description: The id of the workspace
+ *         notifications:
+ *           type: array
+ *           description: The list of notifications
+ *           items:
+ *              type: object
+ *              properties:
+ *                  text:
+ *                      type: string
+ *                      description: The description of the notification
+ *                  timestamp:
+ *                      type: date
+ *                      description: The time of the notification
+ */
+
 const UserSchema = new Schema({
   displayName: {
     type: String,
@@ -19,11 +71,6 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-  },
-  profilePicture: {
-    type: String,
-    required: false,
-    default: '',
   },
   projects: [{ type: mongoose.Types.ObjectId, ref: 'project' }],
   workspaces: [{ type: mongoose.Types.ObjectId, ref: 'workspace' }],
