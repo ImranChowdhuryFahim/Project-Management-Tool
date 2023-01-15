@@ -45,7 +45,7 @@ const { Schema } = mongoose;
  *           description: The id of the user
  */
 
-const projectSchema = new Schema({
+const ProjectSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -66,4 +66,4 @@ const projectSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('project', projectSchema);
+module.exports = mongoose.model('project', ProjectSchema);

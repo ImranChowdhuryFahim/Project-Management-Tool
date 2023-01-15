@@ -29,7 +29,7 @@ const { Schema } = mongoose;
  *              description: The id of the issue
  */
 
-const listSchema = new Schema({
+const ListSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -41,4 +41,4 @@ const listSchema = new Schema({
   issues: [{ type: mongoose.Types.ObjectId, ref: 'issue' }],
 });
 
-module.exports = mongoose.model('list', listSchema);
+module.exports = mongoose.model('list', ListSchema);

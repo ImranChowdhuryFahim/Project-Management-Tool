@@ -23,7 +23,7 @@ const { Schema } = mongoose;
  *           description: The id of the user who added the comment
  */
 
-const commentSchema = new Schema({
+const CommentSchema = new Schema({
   text: {
     type: String,
     required: true,
@@ -34,4 +34,4 @@ const commentSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('comment', commentSchema);
+module.exports = mongoose.model('comment', CommentSchema);

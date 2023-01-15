@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 
+const userRouter = require('./routes/user.route');
+
 const PORT = process.env.PORT || 4000;
 
 const options = {
@@ -35,6 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
+app.use(userRouter);
 
 mongoose.set('strictQuery', false);
 mongoose

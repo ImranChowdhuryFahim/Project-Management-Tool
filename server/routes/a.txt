@@ -1,0 +1,61 @@
+/**
+ * @swagger
+ * /api/register
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/User'
+ *     responses:
+ *       201:
+ *         description: The user was successfully created
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: successfully registered
+ *       409:
+ *         description: Conflict
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  message:
+ *                     type: string
+ *               example:
+ *                  message: user already exists
+ *       422:
+ *         description: Could not process
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  message:
+ *                     type: string
+ *               example:
+ *                  message: email can't be empty
+ * definitions:
+ *   User:
+ *     type: object
+ *     required:
+ *        - displayName
+ *        - email
+ *        - password
+ *     properties:
+ *         displayName:
+ *           type: string
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *           description: minimum 6 characters
+ *     example:
+ *         displayName: Imran Chowdhury
+ *         email: imran.cuet.cse17@gmail.com
+ *         password: '123456'
+ */

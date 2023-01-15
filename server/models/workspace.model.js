@@ -53,7 +53,7 @@ const { Schema } = mongoose;
  *                      description: The time of the activity
  */
 
-const workspaceSchema = new Schema({
+const WorkspaceSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -73,4 +73,4 @@ const workspaceSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('workspace', workspaceSchema);
+module.exports = mongoose.model('workspace', WorkspaceSchema);

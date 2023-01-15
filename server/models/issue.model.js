@@ -38,7 +38,7 @@ const { Schema } = mongoose;
  *              description: The id of the comment
  */
 
-const issueSchema = new Schema({
+const IssueSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -54,4 +54,4 @@ const issueSchema = new Schema({
   comments: [{ type: mongoose.Types.ObjectId, ref: 'comment' }],
 });
 
-module.exports = mongoose.model('issue', issueSchema);
+module.exports = mongoose.model('issue', IssueSchema);
