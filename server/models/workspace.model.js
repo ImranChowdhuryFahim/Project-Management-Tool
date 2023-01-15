@@ -69,7 +69,6 @@ const WorkspaceSchema = new Schema({
   projects: [{ type: mongoose.Types.ObjectId, ref: 'project' }],
   members: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
   invitedUsers: [{ email: { type: String, unique: true } }],
-  activities: [{ text: { type: String }, timestamp: { type: Date, default: Date.now } }],
 
 });
 

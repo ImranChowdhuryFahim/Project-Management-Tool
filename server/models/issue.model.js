@@ -11,6 +11,7 @@ const { Schema } = mongoose;
  *       required:
  *         - title
  *         - key
+ *         - order
  *       properties:
  *         _id:
  *           type: string
@@ -21,6 +22,9 @@ const { Schema } = mongoose;
  *         description:
  *           type: string
  *           description: The short description of the issue
+ *         order:
+ *           type: number
+ *           description: The order of the issue
  *         key:
  *           type: string
  *           description: The unique search key for the issue
@@ -30,12 +34,9 @@ const { Schema } = mongoose;
  *           items:
  *              type: string
  *              description: The id of the assigned user
- *         comments:
- *           type: array
- *           description: The list of comments added to the issue
- *           items:
- *              type: string
- *              description: The id of the comment
+ *         isDone:
+ *           type: boolean
+ *           description: The flag to check if the issue is done or not
  */
 
 const IssueSchema = new Schema({
@@ -46,12 +47,19 @@ const IssueSchema = new Schema({
   description: {
     type: Number,
   },
+  order: {
+    type: Number,
+    required: true,
+  },
   key: {
     type: String,
     required: true,
   },
+  isDone: {
+    type: Boolean,
+    default: false,
+  },
   assignee: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
-  comments: [{ type: mongoose.Types.ObjectId, ref: 'comment' }],
 });
 
 module.exports = mongoose.model('issue', IssueSchema);

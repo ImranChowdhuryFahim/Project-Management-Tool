@@ -1,10 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const UserSchema = require('../models/user.model');
+const User = require('../models/user.model');
 
 module.exports = {
   getAllUsers: async (req, res) => {
-    const usersList = await UserSchema.find().select('-password');
+    const usersList = await User.find().select('-password');
 
     if (!usersList) return res.status(404).json({ message: 'not found' });
 
@@ -13,7 +13,7 @@ module.exports = {
   login: async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await UserSchema.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'no such user exists' });
 
     const validPass = await bcrypt.compare(password, user.password);
@@ -26,13 +26,13 @@ module.exports = {
   register: async (req, res) => {
     const { displayName, email, password } = req.body;
 
-    const emailExist = await UserSchema.findOne({ email });
+    const emailExist = await User.findOne({ email });
     if (emailExist) return res.status(409).json({ message: 'user already exists' });
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = new UserSchema({
+    const user = new User({
       displayName,
       email,
       password: hashedPassword,

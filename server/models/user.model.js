@@ -40,18 +40,6 @@ const { Schema } = mongoose;
  *           items:
  *              type: string
  *              description: The id of the workspace
- *         notifications:
- *           type: array
- *           description: The list of notifications
- *           items:
- *              type: object
- *              properties:
- *                  text:
- *                      type: string
- *                      description: The description of the notification
- *                  timestamp:
- *                      type: date
- *                      description: The time of the notification
  */
 
 const UserSchema = new Schema({
@@ -74,7 +62,6 @@ const UserSchema = new Schema({
   },
   projects: [{ type: mongoose.Types.ObjectId, ref: 'project' }],
   workspaces: [{ type: mongoose.Types.ObjectId, ref: 'workspace' }],
-  notifications: [{ text: { type: String }, timestamp: { type: Date, default: Date.now } }],
 });
 
 module.exports = mongoose.model('user', UserSchema);

@@ -61,7 +61,7 @@ const ProjectSchema = new Schema({
     unique: true,
   },
   members: [{ type: mongoose.Types.ObjectId, role: { type: String, required: true }, ref: 'user' }],
-  board: [{ type: mongoose.Types.ObjectId, ref: 'list' }],
+  board: { type: mongoose.Types.ObjectId, ref: 'list' },
   teamLead: { type: mongoose.Types.ObjectId, required: true },
 
 });
