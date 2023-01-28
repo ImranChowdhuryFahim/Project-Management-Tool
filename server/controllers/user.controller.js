@@ -38,7 +38,9 @@ module.exports = {
       password: hashedPassword,
     });
 
-    await user.save();
+    const savedUser = await user.save();
+
+    if (savedUser === null) return res.status(400).json({ message: 'could not save the user' });
 
     return res.status(200).json({ message: 'successfully registered' });
   },
