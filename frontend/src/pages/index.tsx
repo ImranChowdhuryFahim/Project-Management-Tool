@@ -1,10 +1,15 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import BoardColumn from '@/component/Board/Column';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return <h1>Project Management</h1>;
+  return (
+    <div className="w-4/5 mx-auto mt-10">
+      <BoardColumn />
+    </div>
+  );
 }
