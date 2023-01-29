@@ -15,22 +15,18 @@ const { Schema } = mongoose;
  *       properties:
  *         _id:
  *           type: string
- *           description: The auto-generated mongodb id of the comment
  *         issueId:
  *           type: string
- *           description: The id of the issue
  *         commentBody:
  *           type: string
- *           description: The text of the comment
  *         sender:
  *           type: string
- *           description: The id of the user who added the comment
  *         isEdited:
  *           type: boolean
- *           description: The flag to check if the comment is edited of not
- *         timestamp:
+ *         createdAt:
  *           type: datetime
- *           description: The time of the comment posted or edited
+ *         updatedAt:
+ *           type: datetime
  */
 
 const CommentSchema = new Schema({
@@ -52,10 +48,6 @@ const CommentSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('comment', CommentSchema);

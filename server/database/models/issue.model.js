@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
@@ -12,34 +13,55 @@ const { Schema } = mongoose;
  *         - title
  *         - key
  *         - order
+ *         - projectId
  *       properties:
+ *         projectId:
+ *          type: string
  *         _id:
  *           type: string
- *           description: The auto-generated mongodb id of the issue
  *         title:
  *           type: string
- *           description: The title of the issue
  *         description:
  *           type: string
- *           description: The short description of the issue
  *         order:
  *           type: number
- *           description: The order of the issue
  *         key:
  *           type: string
- *           description: The unique search key for the issue
  *         assignee:
  *           type: array
- *           description: The list of users assigned to the issue
  *           items:
- *              type: string
- *              description: The id of the assigned user
+ *              type: object
+ *              properties:
+ *                _id:
+ *                  type: string
+ *                displayName:
+ *                  type: string
+ *                email:
+ *                  type: string
+ *                avatarLink:
+ *                  type: string
  *         isDone:
  *           type: boolean
- *           description: The flag to check if the issue is done or not
+ *         dueDate:
+ *           type: datetime
  */
 
+const AssigneeSchema = new Schema({
+  _id: { type: mongoose.Types.ObjectId },
+  displayName: { type: String },
+  email: { type: String },
+  avatarLink: { type: String },
+});
+
 const IssueSchema = new Schema({
+  projectId: {
+    type: String,
+    required: true,
+  },
+  boadId: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -58,6 +80,10 @@ const IssueSchema = new Schema({
   isDone: {
     type: Boolean,
     default: false,
+  },
+  dueDate: {
+    type: Date,
+    required: true,
   },
   assignee: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
 });

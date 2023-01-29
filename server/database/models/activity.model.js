@@ -15,19 +15,16 @@ const { Schema } = mongoose;
  *       properties:
  *         _id:
  *           type: string
- *           description: The auto-generated mongodb id of the activity
  *         workspaceId:
  *           type: string
- *           description: The id of the workspace
  *         actorId:
  *           type: string
- *           description: The id of the user who performed the activity
  *         activityBody:
  *           type: string
- *           description: The description of the activity
- *         timestamp:
+ *         createdAt:
  *           type: datetime
- *           description: The time of the activity taking place
+ *         updatedAt:
+ *           type: datetime
  */
 
 const ActivitySchema = new Schema({
@@ -45,10 +42,6 @@ const ActivitySchema = new Schema({
     type: String,
     required: true,
   },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('activity', ActivitySchema);

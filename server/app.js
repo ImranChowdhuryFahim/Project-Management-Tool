@@ -7,6 +7,9 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 
 const userRouter = require('./routes/user.route');
+const workspaceRouter = require('./routes/workspace.route');
+const projectRouter = require('./routes/project.route');
+const boardRouter = require('./routes/board.route');
 
 const PORT = process.env.PORT || 4000;
 
@@ -24,7 +27,7 @@ const options = {
       },
     ],
   },
-  apis: ['./routes/*.js', './models/*.js'],
+  apis: ['./routes/*.js', './database/models/*.js'],
 };
 
 const specs = swaggerJsDoc(options);
@@ -37,5 +40,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 app.use(userRouter);
+app.use(workspaceRouter);
+app.use(projectRouter);
+app.use(boardRouter);
 
 module.exports = app;

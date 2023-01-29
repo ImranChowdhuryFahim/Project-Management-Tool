@@ -14,16 +14,14 @@ const { Schema } = mongoose;
  *       properties:
  *         _id:
  *           type: string
- *           description: The auto-generated mongodb id of the activity
  *         notifyeeId:
  *           type: string
- *           description: The id of the user who should be notified
  *         notificationBody:
  *           type: string
- *           description: The body of the notification
- *         timestamp:
+ *         createdAt:
  *           type: datetime
- *           description: The time of notification posted
+ *         updatedAt:
+ *           type: datetime
  */
 
 const NotificationSchema = new Schema({
@@ -32,14 +30,10 @@ const NotificationSchema = new Schema({
     required: true,
     ref: 'user',
   },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
   notificationBody: {
     type: String,
     required: true,
   },
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('notification', NotificationSchema);

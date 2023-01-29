@@ -1,47 +1,97 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
+const { generateHash, generateSignature, validatePassword } = require('../utils');
+const { UserRepository } = require('../database');
+const { sendAccountCreatedEmail } = require('../utils/email/mail.service');
+
+const repository = new UserRepository();
 
 module.exports = {
-  getAllUsers: async (req, res) => {
-    const usersList = await User.find().select('-password');
-
-    if (!usersList) return res.status(404).json({ message: 'not found' });
-
-    return res.status(200).send(usersList);
-  },
   login: async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await repository.findUserByEmail({ email });
     if (!user) return res.status(404).json({ message: 'no such user exists' });
 
-    const validPass = await bcrypt.compare(password, user.password);
+    const validPass = await validatePassword(password, user.password);
     if (!validPass) return res.status(401).json({ message: 'credentials do not match' });
 
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    const token = await generateSignature({ _id: user._id });
 
     return res.status(200).json({ message: 'successfully logged in', token });
   },
   register: async (req, res) => {
     const { displayName, email, password } = req.body;
 
-    const emailExist = await User.findOne({ email });
+    const emailExist = await repository.findUserByEmail({ email });
     if (emailExist) return res.status(409).json({ message: 'user already exists' });
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await generateHash(password);
 
-    const user = new User({
-      displayName,
-      email,
-      password: hashedPassword,
-    });
+    const newUser = await repository.createUser({ displayName, email, hashedPassword });
 
-    const savedUser = await user.save();
+    if (newUser === null) return res.status(400).json({ message: 'could not save the user' });
 
-    if (savedUser === null) return res.status(400).json({ message: 'could not save the user' });
+    sendAccountCreatedEmail({ email, userName: displayName });
 
     return res.status(200).json({ message: 'successfully registered' });
   },
+
+  getProfileDetails: async (req, res) => {
+    const { _id } = req.user;
+
+    const result = await repository.getUserProfile({ _id });
+    if (!result) return res.status(404).json({ message: 'user not found' });
+    return res.status(200).json({ profileDetails: result });
+  },
+
+  updateProfile: async (req, res) => {
+    const { _id } = req.user;
+    const { displayName, avatarLink } = req.body;
+
+    await repository.updateUserProfile({ _id, displayName, avatarLink });
+    return res.status(200).json({ message: 'successfully updated user info' });
+  },
+
+  addWorkspace: async (req, res) => {
+    const { _id } = req.user;
+    const { workspaceId, role } = req.body;
+
+    await repository.addWorkspace({ _id, workspaceId, role });
+    return res.status(200).json({ message: 'successfully added workspace' });
+  },
+
+  getWorkspaces: async (req, res) => {
+    const { _id } = req.user;
+    const workspaces = await repository.getWorkspaces({ _id });
+
+    if (!workspaces) return res.status(404).json({ message: 'not found' });
+
+    return res.status(200).json({ workspaces });
+  },
+
+  addProject: async (req, res) => {
+    const { _id } = req.user;
+    const { projectId, role } = req.body;
+
+    await repository.addProject({ _id, projectId, role });
+    return res.status(200).json({ message: 'successfully added project' });
+  },
+
+  getProjects: async (req, res) => {
+    const { _id } = req.user;
+    const projects = await repository.getProjects({ _id });
+
+    if (!projects) return res.status(404).json({ message: 'not found' });
+
+    return res.status(200).json({ projects });
+  },
+
+  getWorkspaceProjects: async (req, res) => {
+    const { _id } = req.user;
+    const { workspaceId } = req.params;
+    const projects = await repository.getWorkspaceProjects({ _id, workspaceId });
+    if (!projects) return res.status(404).json({ message: 'not found' });
+
+    return res.status(200).json({ projects });
+  },
+
 };

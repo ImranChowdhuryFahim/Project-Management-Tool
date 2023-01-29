@@ -20,7 +20,35 @@ const signUp = Joi.object({
     .required(),
 });
 
+const profilePayload = Joi.object({
+  displayName: Joi.string().required(),
+  avatarLink: Joi.string().allow('', null),
+});
+
+const workspacePayload = Joi.object({
+  title: Joi.string().required(),
+  key: Joi.string().required(),
+  description: Joi.string().allow('', null),
+});
+
+const addMemberPayload = Joi.object({
+  userId: Joi.string().required(),
+  workspaceId: Joi.string().required(),
+  role: Joi.string().required(),
+});
+
+const projectPayload = Joi.object({
+  workspaceId: Joi.string().required(),
+  title: Joi.string().required(),
+  key: Joi.string().required(),
+  description: Joi.string().required(),
+});
+
 module.exports = {
   login,
   signUp,
+  workspacePayload,
+  profilePayload,
+  addMemberPayload,
+  projectPayload,
 };

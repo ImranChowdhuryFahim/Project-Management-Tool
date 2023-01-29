@@ -6,8 +6,19 @@ const controller = require('../controllers/user.controller');
 const validation = require('../validation/validation');
 
 const { validate } = require('../middleware/validation.middleware');
+const { authenticate } = require('../middleware/authentication.middleware');
 
 const router = express.Router();
+
+/**
+ * @swagger
+ * components:
+ *    securitySchemes:
+ *      ApiKeyAuth:
+ *         type: apiKey
+ *         in: header
+ *         name: auth-token
+ */
 
 /**
  * @swagger
@@ -91,7 +102,7 @@ const router = express.Router();
  *                password:
  *                   type: string
  *             example:
- *               email: imran.cuet.cse17@gmail.com
+ *               email: u1704107@student.cuet.ac.bd
  *               password: "123456"
  *     responses:
  *       200:
@@ -107,7 +118,7 @@ const router = express.Router();
  *                    type: string
  *               example:
  *                 message: successfully logged in
- *                 token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGNjODlmMzhkNTlkNjhlNjNkMzM2ZjUiLCJpYXQiOjE2MjQwMTc0NDl9.gGEg_O-BwmWx3kPj6CXpo9rWH_0bcfESAe5rrTvu9lw"
+ *                 token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2Q2MTliY2UxNTA0YmFiZWEyNWMxYzEiLCJpYXQiOjE2NzQ5NzU3MTd9.mXW41zcdbRE79MLPm1rdLxoElLtfcfPTjK6lhWYKMbQ"
  *       401:
  *         description: Validation error
  *         content:
@@ -125,7 +136,99 @@ const router = express.Router();
  *                example:
  *                     message: no such user exists
  */
+
+/**
+ * @swagger
+ * /api/user/profile:
+ *   get:
+ *     summary: User profile
+ *     tags: [User]
+ */
+
+/**
+ * @swagger
+ * /api/user/profile:
+ *   get:
+ *     summary: get user profile info
+ *     tags: [User]
+ *     security:
+ *        - ApiKeyAuth: []
+ */
+/**
+ * @swagger
+ * /api/user/profile:
+ *   put:
+ *     summary: update user profile info
+ *     tags: [User]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *                displayName:
+ *                   type: string
+ *                avatarLink:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Successfully updated
+ */
+
+/**
+ * @swagger
+ * /api/user/workspace:
+ *   get:
+ *     summary: get user workspaces list
+ *     tags: [User]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved workspaces list
+ */
+/**
+
+/**
+ * @swagger
+ * /api/user/project:
+ *   get:
+ *     summary: get user projects list
+ *     tags: [User]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved projects list
+ */
+
+/**
+ * @swagger
+ * /api/user/project/{workspaceId}:
+ *   get:
+ *     summary: get user projects list
+ *     tags: [User]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: workspaceId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The workspace id
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved projects list
+ */
 router.route('/api/user/register').post(validate(validation.signUp), controller.register);
 router.route('/api/user/login').post(validate(validation.login), controller.login);
-router.route('/api/test/usersList').get(controller.getAllUsers);
+router.route('/api/user/profile').get(authenticate, controller.getProfileDetails);
+router.route('/api/user/profile').put(authenticate, validate(validation.profilePayload), controller.updateProfile);
+router.route('/api/user/workspace').get(authenticate, controller.getWorkspaces);
+router.route('/api/user/project').get(authenticate, controller.getProjects);
+router.route('/api/user/project/:workspaceId').get(authenticate, controller.getWorkspaceProjects);
 module.exports = router;
