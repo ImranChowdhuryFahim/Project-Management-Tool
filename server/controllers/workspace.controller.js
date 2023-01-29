@@ -34,9 +34,10 @@ module.exports = {
   //   },
 
   addMember: async (req, res) => {
-    const { workspaceId, userId, role } = req.body;
+    const { workspaceKey } = req.params;
+    const { userId, role } = req.body;
 
-    const workspace = await workspaceRepository.findWorkspaceById({ _id: workspaceId });
+    const workspace = await workspaceRepository.findWorkspaceByKey({ workspaceKey });
 
     if (!workspace) return res.status(404).json({ message: 'not found' });
 
@@ -44,6 +45,15 @@ module.exports = {
     await workspace.save();
 
     return res.status(200).json({ message: 'successfully added user' });
+  },
+
+  getWorkspaceDetails: async (req, res) => {
+    const { workspaceKey } = req.params;
+    const workspace = await workspaceRepository.findWorkspaceDetailsByKey({ workspaceKey });
+
+    if (!workspace) return res.status(404).json({ message: 'not found' });
+
+    return res.status(200).json({ workspace });
   },
 
 };

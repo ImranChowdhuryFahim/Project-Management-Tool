@@ -64,18 +64,9 @@ const ProjecSchema = new Schema({
 });
 
 const WorkspaceSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    default: '',
-  },
-  key: {
-    type: String,
-    required: true,
-  },
+  title: { type: String, required: true },
+  description: { type: String, default: '' },
+  key: { type: String, required: true },
   members: [{ member: { type: mongoose.Types.ObjectId, ref: 'user' }, role: { type: String } }],
   invitedUsers: [{ email: { type: String } }],
   owner: { type: mongoose.Types.ObjectId, ref: 'user' },

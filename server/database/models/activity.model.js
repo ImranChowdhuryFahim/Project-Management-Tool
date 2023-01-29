@@ -28,20 +28,9 @@ const { Schema } = mongoose;
  */
 
 const ActivitySchema = new Schema({
-  workspaceId: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: 'workspace',
-  },
-  actorId: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: 'user',
-  },
-  activityBody: {
-    type: String,
-    required: true,
-  },
+  workspaceId: { type: mongoose.Types.ObjectId, required: true, ref: 'workspace' },
+  actorId: { type: mongoose.Types.ObjectId, required: true, ref: 'user' },
+  activityBody: { type: String, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('activity', ActivitySchema);

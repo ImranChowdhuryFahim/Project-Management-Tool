@@ -11,19 +11,20 @@ const columnRepository = new ColumnRepository();
 module.exports = {
 
   createProject: async (req, res) => {
+    const { workspaceKey } = req.params;
     const {
-      workspaceId, title, description, key,
+      title, description, key,
     } = req.body;
 
-    const workspace = await workspaceRepository.findWorkspaceById({ _id: workspaceId });
+    const workspace = await workspaceRepository.findWorkspaceByKey({ workspaceKey });
 
     if (!workspace) return res.status(404).json({ message: 'workspace not found' });
 
-    const alreadyExit = await projectRepository.findDuplicatePoject({ workspaceId, title, key });
+    const alreadyExit = await projectRepository.findDuplicatePoject({ workspaceKey, title });
     if (alreadyExit) return res.status(409).json({ message: 'project already exists' });
 
     const project = await projectRepository.createProject({
-      workspaceId, title, key, description, teamLead: req.user._id,
+      workspaceKey, title, key, description, teamLead: req.user._id,
     });
 
     if (!project) return res.status(500).json({ message: 'could not create the workspace' });
@@ -32,7 +33,7 @@ module.exports = {
 
     await project.save();
 
-    const board = await boardRepository.createBoard({ projectId: project._id, title: `${project.key} board'` });
+    const board = await boardRepository.createBoard({ projectKey: project.key, workspaceKey, title: `${project.key} board'` });
 
     const column1 = await columnRepository.createColumn({ title: 'TO DO', order: 1 });
     const column2 = await columnRepository.createColumn({ title: 'IN PROGRESS', order: 2 });

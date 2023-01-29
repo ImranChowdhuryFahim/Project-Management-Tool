@@ -12,8 +12,11 @@ const { Schema } = mongoose;
  *         - title
  *         - key
  *         - teamLead
+ *         - workspaceKey
  *       properties:
  *         _id:
+ *           type: string
+ *         workspaceKey:
  *           type: string
  *         title:
  *           type: string
@@ -42,26 +45,13 @@ const memberSchema = new Schema({
 });
 
 const ProjectSchema = new Schema({
-  workspaceId: { type: mongoose.Types.ObjectId, required: true },
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    default: '',
-  },
-  key:
-  {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  workspaceKey: { type: String, required: true },
+  title: { type: String, required: true },
+  description: { type: String, default: '' },
+  key: { type: String, required: true, unique: true },
   members: [{ member: { type: mongoose.Types.ObjectId, ref: 'user' }, role: { type: String, required: true } }],
   teamLead: { type: mongoose.Types.ObjectId, ref: 'user' },
 
 });
 
 module.exports = mongoose.model('project', ProjectSchema);
-
-// board: { type: mongoose.Types.ObjectId, ref: 'list' },

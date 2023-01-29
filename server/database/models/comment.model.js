@@ -30,24 +30,10 @@ const { Schema } = mongoose;
  */
 
 const CommentSchema = new Schema({
-  issueId: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: 'issue',
-  },
-  commentBody: {
-    type: String,
-    required: true,
-  },
-  senderId: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: 'user',
-  },
-  isEdited: {
-    type: Boolean,
-    default: false,
-  },
+  issueId: { type: mongoose.Types.ObjectId, required: true, ref: 'issue' },
+  commentBody: { type: String, required: true },
+  senderId: { type: mongoose.Types.ObjectId, required: true, ref: 'user' },
+  isEdited: { type: Boolean, default: false },
 }, { timestamps: true });
 
 module.exports = mongoose.model('comment', CommentSchema);

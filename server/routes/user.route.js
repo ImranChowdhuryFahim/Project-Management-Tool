@@ -141,14 +141,6 @@ const router = express.Router();
  * @swagger
  * /api/user/profile:
  *   get:
- *     summary: User profile
- *     tags: [User]
- */
-
-/**
- * @swagger
- * /api/user/profile:
- *   get:
  *     summary: get user profile info
  *     tags: [User]
  *     security:
@@ -180,7 +172,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/user/workspace:
+ * /api/user/workspaces:
  *   get:
  *     summary: get user workspaces list
  *     tags: [User]
@@ -194,7 +186,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/user/project:
+ * /api/user/projects:
  *   get:
  *     summary: get user projects list
  *     tags: [User]
@@ -207,7 +199,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/user/project/{workspaceId}:
+ * /api/user/projects/{workspaceId}:
  *   get:
  *     summary: get user projects list
  *     tags: [User]
@@ -228,7 +220,7 @@ router.route('/api/user/register').post(validate(validation.signUp), controller.
 router.route('/api/user/login').post(validate(validation.login), controller.login);
 router.route('/api/user/profile').get(authenticate, controller.getProfileDetails);
 router.route('/api/user/profile').put(authenticate, validate(validation.profilePayload), controller.updateProfile);
-router.route('/api/user/workspace').get(authenticate, controller.getWorkspaces);
-router.route('/api/user/project').get(authenticate, controller.getProjects);
-router.route('/api/user/project/:workspaceId').get(authenticate, controller.getWorkspaceProjects);
+router.route('/api/user/workspaces').get(authenticate, controller.getWorkspaces);
+router.route('/api/user/projects').get(authenticate, controller.getProjects);
+router.route('/api/user/projects/:workspaceId').get(authenticate, controller.getWorkspaceProjects);
 module.exports = router;

@@ -21,23 +21,6 @@ const { Schema } = mongoose;
  *           type: number
  *         issues:
  *           type: array
- *           items:
- *              type: object
- *              properties:
- *                _id:
- *                  type: string
- *                title:
- *                  type: string
- *                description:
- *                  type: string
- *                order:
- *                  type: number
- *                key:
- *                  type: string
- *                isDone:
- *                  type: boolean
- *                dueDate:
- *                  type: datetime
  */
 const IssueSchema = new Schema({
   _id: { type: mongoose.Types.ObjectId },
@@ -50,14 +33,8 @@ const IssueSchema = new Schema({
 });
 
 const ColumnSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  order: {
-    type: Number,
-    required: true,
-  },
+  title: { type: String, required: true },
+  order: { type: Number, required: true },
   issues: [{ issue: { type: mongoose.Types.ObjectId, ref: 'issue' } }],
 });
 

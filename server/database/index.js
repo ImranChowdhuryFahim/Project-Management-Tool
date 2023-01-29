@@ -5,4 +5,5 @@ module.exports = {
   ProjectRepository: require('./repository/project.repository'),
   BoardRepository: require('./repository/board.repository'),
   ColumnRepository: require('./repository/column.repository'),
+  IssueRepository: require('./repository/issue.repository'),
 };

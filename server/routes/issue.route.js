@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 const express = require('express');
 
-const controller = require('../controllers/board.controller');
+const controller = require('../controllers/issue.controller');
 
 const validation = require('../validation/validation');
 
@@ -23,9 +23,9 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/workspace/{workspaceKey}/project/{projectKey}/board:
- *   get:
- *     summary: Get Board details
+ * /api/workspace/{workspaceKey}/project/{projectKey}/board/issue:
+ *   post:
+ *     summary: create issue
  *     tags: [Workspace]
  *     security:
  *        - ApiKeyAuth: []
@@ -42,9 +42,15 @@ const router = express.Router();
  *              type: string
  *          required: true
  *          description: The project key
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/Issue'
  *     responses:
- *       200:
- *         description: Successfully retrieved board details
+ *       201:
+ *         description: Successfully created issue
  *       404:
  *         description: Conflict
  *         content:
@@ -57,6 +63,6 @@ const router = express.Router();
  *               example:
  *                  message: not found
  */
-router.route('/api/workspace/:workspaceKey/project/:projectKey/board').get(authenticate, controller.getBoardDetails);
+router.route('/api/workspace/:workspaceKey/project/:projectKey/board/issue').post(authenticate, validate(validation.issuePayload), controller.createIssue);
 
 module.exports = router;

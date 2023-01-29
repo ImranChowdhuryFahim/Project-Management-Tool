@@ -1,16 +1,13 @@
 /* eslint-disable class-methods-use-this */
 // eslint-disable-next-line no-unused-vars
 const mongoose = require('mongoose');
-const BoardModel = require('../models/board.model');
 const IssueModel = require('../models/issue.model');
 
 class IssueRepository {
   async createIssue({
-    projectId, boardId, title, description, order, key, isDone, dueDate,
+    title, description, order, key, isDone, dueDate,
   }) {
     const issue = new IssueModel({
-      projectId,
-      boardId,
       title,
       description,
       order,
@@ -21,16 +18,16 @@ class IssueRepository {
     return issue.save();
   }
 
-  async getBoardDetails({ projectId }) {
-    const board = await BoardModel.findOne({ projectId }).select(['-columns._id']).populate({
-      path: 'columns.column',
-      select: ['-__v'],
-      populate: {
-        path: 'issues.issue',
-        model: IssueModel,
-      },
+  async updateIssue({
+    issueId, title, description, order, isDone, dueDate,
+  }) {
+    return IssueModel.updateOne({ _id: issueId }, {
+      title, description, order, isDone, dueDate,
     });
-    return board;
+  }
+
+  async deleteIssue({ issueId }) {
+    return IssueModel.deleteOne({ _id: issueId });
   }
 }
 

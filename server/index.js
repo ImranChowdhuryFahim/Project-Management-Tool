@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
-const dotenv = require('dotenv').config();
+const config = require('./config');
 const app = require('./app');
 
-const PORT = process.env.PORT || 4000;
+const PORT = config.port || 4000;
 mongoose.set('strictQuery', false);
 mongoose
-  .connect(process.env.LOCAL_MONGO, {
+  .connect(config.db.local_host, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

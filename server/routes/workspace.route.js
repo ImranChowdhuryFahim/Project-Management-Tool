@@ -14,10 +14,22 @@ const router = express.Router();
 
 /**
  * @swagger
+ * components:
+ *    securitySchemes:
+ *      ApiKeyAuth:
+ *         type: apiKey
+ *         in: header
+ *         name: auth-token
+ */
+
+/**
+ * @swagger
  * /api/workspace:
  *   post:
  *     summary: Create a new workspace
  *     tags: [Workspace]
+ *     security:
+ *        - ApiKeyAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -83,10 +95,43 @@ const router = express.Router();
  */
 /**
  * @swagger
- * /api/workspace/member:
+ * /api/workspace/{workspaceKey}:
+ *   get:
+ *     summary: Get workspace details
+ *     tags: [Workspace]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: workspaceKey
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The workspace key
+ *     responses:
+ *       200:
+ *         description: Retrieved workspace details successfully
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: successfully added workspace
+ */
+
+/**
+ * @swagger
+ * /api/workspace/{workspaceKey}/member:
  *   post:
  *     summary: Add member to workspace
  *     tags: [Workspace]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: workspaceKey
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The workspace key
  *     requestBody:
  *       required: true
  *       content:
@@ -115,7 +160,6 @@ const router = express.Router();
  *   AddMemberPayload:
  *     type: object
  *     required:
- *        - workspaceId
  *        - userId
  *        - role
  *     properties:
@@ -127,6 +171,7 @@ const router = express.Router();
  *           type: string
  */
 router.route('/api/workspace').post(authenticate, validate(validation.workspacePayload), controller.createWorkspace);
-router.route('/api/worspace/member').post(authenticate, validate(validation.addMemberPayload), controller.addMember);
+router.route('/api/worspace/:workspaceKey/member').post(authenticate, validate(validation.addMemberPayload), controller.addMember);
+router.route('/api/workspace/:workspaceKey').get(authenticate, controller.getWorkspaceDetails);
 
 module.exports = router;

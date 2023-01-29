@@ -13,6 +13,10 @@ class ColumnRepository {
     });
     return board.save();
   }
+
+  async findColumnById({ columnId }) {
+    return ColumnModel.findOne({ _id: columnId });
+  }
 }
 
 module.exports = ColumnRepository;

@@ -32,16 +32,21 @@ const workspacePayload = Joi.object({
 });
 
 const addMemberPayload = Joi.object({
-  userId: Joi.string().required(),
   workspaceId: Joi.string().required(),
   role: Joi.string().required(),
 });
 
 const projectPayload = Joi.object({
-  workspaceId: Joi.string().required(),
   title: Joi.string().required(),
   key: Joi.string().required(),
   description: Joi.string().required(),
+});
+
+const issuePayload = Joi.object({
+  columnId: Joi.string().required(),
+  title: Joi.string().required(),
+  description: Joi.string().required(),
+  dueDate: Joi.date(),
 });
 
 module.exports = {
@@ -51,4 +56,5 @@ module.exports = {
   profilePayload,
   addMemberPayload,
   projectPayload,
+  issuePayload,
 };

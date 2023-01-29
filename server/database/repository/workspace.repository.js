@@ -12,6 +12,14 @@ class WorkspaceRepository {
     return WorkspaceModel.findOne({ _id });
   }
 
+  async findWorkspaceByKey({ workspaceKey }) {
+    return WorkspaceModel.findOne({ key: workspaceKey });
+  }
+
+  async findWorkspaceDetailsByKey({ workspaceKey }) {
+    return WorkspaceModel.findOne({ key: workspaceKey }).select(['-__v', '-invitedUsers']).populate('members.member', ['-__v', '-password', '-workspaces', '-projects']);
+  }
+
   async createWorkspace({
     title, key, description, owner,
   }) {

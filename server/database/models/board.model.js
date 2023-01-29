@@ -11,16 +11,23 @@ const { Schema } = mongoose;
  *       type: object
  *       required:
  *         - title
- *         - projectId
+ *         - workspaceKey
+ *         - projectKey
  *       properties:
  *         _id:
  *           type: string
  *         title:
  *           type: string
- *         projectId:
+ *         workspaceKey:
+ *           type: string
+ *         projectKey:
  *           type: string
  *         columns:
- *          type: object
+ *          type: array
+ *         colorCode:
+ *          type: string
+ *         totalIssueCount:
+ *          type: number
  */
 
 const IssueSchema = new Schema({
@@ -42,7 +49,10 @@ const ColumnSchema = new Schema({
 
 const BoardSchema = new Schema({
   title: { type: String },
-  projectId: { type: mongoose.Types.ObjectId },
+  projectKey: { type: String, required: true },
+  workspaceKey: { type: String, required: true },
   columns: [{ column: { type: mongoose.Types.ObjectId, ref: 'column' } }],
+  colorCode: { type: String, default: '#FFFFFF' },
+  totalIssueCount: { type: Number, default: 0 },
 });
 module.exports = mongoose.model('board', BoardSchema);

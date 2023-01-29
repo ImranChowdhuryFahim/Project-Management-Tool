@@ -8,21 +8,26 @@ class ProjectRepository {
     return ProjectModel.findOne({ key });
   }
 
-  async findDuplicatePoject({ workspaceId, title }) {
-    return ProjectModel.findOne({ workspaceId, title });
+  async findDuplicatePoject({ workspaceKey, title }) {
+    return ProjectModel.findOne({ workspaceKey, title });
   }
 
   async createProject({
-    workspaceId, title, key, description, teamLead,
+    workspaceKey, title, key, description, teamLead,
   }) {
     const project = new ProjectModel({
-      workspaceId,
+      workspaceKey,
       title,
       key,
       description,
       teamLead,
     });
     return project.save();
+  }
+
+  async getProjects({ workspaceKey }) {
+    const projects = await ProjectModel.find({ workspaceKey });
+    return projects;
   }
 }
 

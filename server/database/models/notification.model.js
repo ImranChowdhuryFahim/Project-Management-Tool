@@ -25,15 +25,8 @@ const { Schema } = mongoose;
  */
 
 const NotificationSchema = new Schema({
-  notifyeeId: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: 'user',
-  },
-  notificationBody: {
-    type: String,
-    required: true,
-  },
+  notifyeeId: { type: mongoose.Types.ObjectId, required: true, ref: 'user' },
+  notificationBody: { type: String, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('notification', NotificationSchema);

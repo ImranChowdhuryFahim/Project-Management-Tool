@@ -10,6 +10,7 @@ const userRouter = require('./routes/user.route');
 const workspaceRouter = require('./routes/workspace.route');
 const projectRouter = require('./routes/project.route');
 const boardRouter = require('./routes/board.route');
+const isseuRouter = require('./routes/issue.route');
 
 const PORT = process.env.PORT || 4000;
 
@@ -43,5 +44,6 @@ app.use(userRouter);
 app.use(workspaceRouter);
 app.use(projectRouter);
 app.use(boardRouter);
+app.use(isseuRouter);
 
 module.exports = app;

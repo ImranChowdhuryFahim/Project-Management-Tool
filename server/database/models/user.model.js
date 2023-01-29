@@ -68,24 +68,12 @@ const workspaceSchema = new Schema({
 });
 
 const UserSchema = new Schema({
-  displayName: {
-    type: String,
-    required: true,
-  },
+  displayName: { type: String, required: true },
   email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
+    type: String, required: true, unique: true, trim: true,
   },
-  avatarLink: {
-    type: String,
-    default: null,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
+  avatarLink: { type: String, default: null },
+  password: { type: String, required: true },
   projects: [{ type: mongoose.Types.ObjectId, ref: 'project' }],
   workspaces: [{ workspace: { type: mongoose.Types.ObjectId, ref: 'workspace' }, role: { type: String } }],
 });

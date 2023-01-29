@@ -29,20 +29,13 @@ const { Schema } = mongoose;
  *           type: string
  *         assignee:
  *           type: array
- *           items:
- *              type: object
- *              properties:
- *                _id:
- *                  type: string
- *                displayName:
- *                  type: string
- *                email:
- *                  type: string
- *                avatarLink:
- *                  type: string
  *         isDone:
  *           type: boolean
  *         dueDate:
+ *           type: datetime
+ *         createdAt:
+ *           type: datetime
+ *         updatedAt:
  *           type: datetime
  */
 
@@ -54,38 +47,13 @@ const AssigneeSchema = new Schema({
 });
 
 const IssueSchema = new Schema({
-  projectId: {
-    type: String,
-    required: true,
-  },
-  boadId: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: Number,
-  },
-  order: {
-    type: Number,
-    required: true,
-  },
-  key: {
-    type: String,
-    required: true,
-  },
-  isDone: {
-    type: Boolean,
-    default: false,
-  },
-  dueDate: {
-    type: Date,
-    required: true,
-  },
+  title: { type: String, required: true },
+  description: { type: String },
+  order: { type: Number, required: true },
+  key: { type: String, required: true },
+  isDone: { type: Boolean, default: false },
+  dueDate: { type: Date, required: true },
   assignee: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('issue', IssueSchema);
