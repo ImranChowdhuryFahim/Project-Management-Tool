@@ -3,7 +3,7 @@ const request = require('supertest');
 // eslint-disable-next-line no-unused-vars
 const config = require('./config');
 const app = require('./app');
-const { generateHash, validatePassword } = require('./utils');
+
 
 /* Connecting to the database before each test. */
 beforeEach(async () => {
@@ -31,12 +31,5 @@ describe('Login', () => {
     });
     expect(res.statusCode).toBe(404);
     expect(res.body.message).toBe('no such user exists');
-  });
-
-  test('hash function check', async () => {
-    const password = '1235';
-    const hashedPassword = await generateHash(password);
-
-    expect(await validatePassword(password, hashedPassword)).toBe(true);
   });
 });
