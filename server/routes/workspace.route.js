@@ -82,7 +82,7 @@ const router = express.Router();
  *     required:
  *        - title
  *        - key
- *        - owner
+ 
  *     properties:
  *         title:
  *           type: string
@@ -90,8 +90,7 @@ const router = express.Router();
  *           type: string
  *         description:
  *           type: string
- *         owner:
- *           type: string
+
  */
 /**
  * @swagger
@@ -171,7 +170,7 @@ const router = express.Router();
  *           type: string
  */
 router.route('/api/workspace').post(authenticate, validate(validation.workspacePayload), controller.createWorkspace);
-router.route('/api/worspace/:workspaceKey/member').post(authenticate, validate(validation.addMemberPayload), controller.addMember);
+router.route('/api/worKspace/:workspaceKey/member').post(authenticate, validate(validation.addMemberPayload), controller.addMember);
 router.route('/api/workspace/:workspaceKey').get(authenticate, controller.getWorkspaceDetails);
 
 module.exports = router;

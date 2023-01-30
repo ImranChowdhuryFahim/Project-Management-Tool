@@ -145,6 +145,9 @@ const router = express.Router();
  *     tags: [User]
  *     security:
  *        - ApiKeyAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved workspaces list
  */
 /**
  * @swagger
@@ -199,7 +202,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/user/projects/{workspaceId}:
+ * /api/user/projects/{workspaceKey}:
  *   get:
  *     summary: get user projects list
  *     tags: [User]
@@ -207,7 +210,7 @@ const router = express.Router();
  *        - ApiKeyAuth: []
  *     parameters:
  *        - in: path
- *          name: workspaceId
+ *          name: workspaceKey
  *          schema:
  *             type: string
  *          required: true
@@ -222,5 +225,5 @@ router.route('/api/user/profile').get(authenticate, controller.getProfileDetails
 router.route('/api/user/profile').put(authenticate, validate(validation.profilePayload), controller.updateProfile);
 router.route('/api/user/workspaces').get(authenticate, controller.getWorkspaces);
 router.route('/api/user/projects').get(authenticate, controller.getProjects);
-router.route('/api/user/projects/:workspaceId').get(authenticate, controller.getWorkspaceProjects);
+router.route('/api/user/projects/:workspaceKey').get(authenticate, controller.getWorkspaceProjects);
 module.exports = router;

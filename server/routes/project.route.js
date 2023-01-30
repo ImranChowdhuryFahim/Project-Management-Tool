@@ -29,6 +29,13 @@ const router = express.Router();
  *     tags: [Workspace]
  *     security:
  *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: workspaceKey
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The workspace key
  *     requestBody:
  *       required: true
  *       content:

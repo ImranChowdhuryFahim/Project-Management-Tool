@@ -47,7 +47,7 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/definitions/Issue'
+ *             $ref: '#/definitions/createIssue'
  *     responses:
  *       201:
  *         description: Successfully created issue
@@ -62,6 +62,23 @@ const router = express.Router();
  *                     type: string
  *               example:
  *                  message: not found
+ * definitions:
+ *   createIssue:
+ *     type: object
+ *     required:
+ *        - columnId
+ *        - title
+ *        - description
+ *        - dueDate
+ *     properties:
+ *         columnId:
+ *           type: string
+ *         title:
+ *           type: string
+ *         description:
+ *           type: string
+ *         dueDate:
+ *           type: datetime
  */
 
 /**
@@ -182,7 +199,9 @@ const router = express.Router();
  *        - fromIndex
  *        - toIndex
  *     properties:
- *         columnId:
+ *         toColumnId:
+ *           type: string
+ *         fromColumnId:
  *           type: string
  *         issueId:
  *           type: string

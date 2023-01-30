@@ -60,8 +60,9 @@ class UserRepository {
     return user.projects;
   }
 
-  async getWorkspaceProjects({ _id, workspaceId }) {
-    const user = await UserModel.findOne({ _id }).populate({ path: 'projects', match: { workspaceId }, select: ['_id', 'title', 'key', 'description'] });
+  async getWorkspaceProjects({ _id, workspaceKey }) {
+    const user = await UserModel.findOne({ _id }).populate({ path: 'projects', match: { workspaceKey }, select: ['_id', 'title', 'key', 'description'] });
+    console.log(user)
     return user.projects;
   }
 }

@@ -87,8 +87,8 @@ module.exports = {
 
   getWorkspaceProjects: async (req, res) => {
     const { _id } = req.user;
-    const { workspaceId } = req.params;
-    const projects = await repository.getWorkspaceProjects({ _id, workspaceId });
+    const { workspaceKey } = req.params;
+    const projects = await repository.getWorkspaceProjects({ _id, workspaceKey });
     if (!projects) return res.status(404).json({ message: 'not found' });
 
     return res.status(200).json({ projects });

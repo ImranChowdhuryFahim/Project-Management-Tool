@@ -32,6 +32,7 @@ const workspacePayload = Joi.object({
 });
 
 const addMemberPayload = Joi.object({
+  userId: Joi.string().required(),
   workspaceId: Joi.string().required(),
   role: Joi.string().required(),
 });
@@ -52,8 +53,8 @@ const issuePayload = Joi.object({
 const moveIssuePayload = Joi.object({
   columnId: Joi.string().required(),
   issueId: Joi.string().required(),
-  fromIndex: Joi.string().required(),
-  toIndex: Joi.string().required(),
+  fromIndex: Joi.number().required(),
+  toIndex: Joi.number().required(),
 });
 
 const switchIssuePayload = Joi.object({
