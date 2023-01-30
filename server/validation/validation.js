@@ -60,8 +60,8 @@ const switchIssuePayload = Joi.object({
   fromColumnId: Joi.string().required(),
   toColumnId: Joi.string().required(),
   issueId: Joi.string().required(),
-  fromIndex: Joi.string().required(),
-  toIndex: Joi.string().required(),
+  fromIndex: Joi.number().required(),
+  toIndex: Joi.number().required(),
 });
 
 module.exports = {
