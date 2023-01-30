@@ -13,9 +13,12 @@ const { Schema } = mongoose;
  *         - title
  *         - key
  *         - order
- *         - projectId
+ *         - workspaceKey
+ *         - projectKey
  *       properties:
- *         projectId:
+ *         workspaceKey:
+ *          type: string
+ *         projectKey:
  *          type: string
  *         _id:
  *           type: string
@@ -47,9 +50,10 @@ const AssigneeSchema = new Schema({
 });
 
 const IssueSchema = new Schema({
+  workspaceKey: { type: String, required: true },
+  projectKey: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String },
-  order: { type: Number, required: true },
   key: { type: String, required: true },
   isDone: { type: Boolean, default: false },
   dueDate: { type: Date, required: true },

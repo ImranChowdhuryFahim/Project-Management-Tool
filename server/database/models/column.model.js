@@ -34,8 +34,7 @@ const IssueSchema = new Schema({
 
 const ColumnSchema = new Schema({
   title: { type: String, required: true },
-  order: { type: Number, required: true },
-  issues: [{ issue: { type: mongoose.Types.ObjectId, ref: 'issue' } }],
+  issues: [{ type: mongoose.Types.ObjectId, ref: 'issue' }],
 });
 
 module.exports = mongoose.model('column', ColumnSchema);

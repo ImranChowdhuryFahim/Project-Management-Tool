@@ -51,7 +51,7 @@ const BoardSchema = new Schema({
   title: { type: String },
   projectKey: { type: String, required: true },
   workspaceKey: { type: String, required: true },
-  columns: [{ column: { type: mongoose.Types.ObjectId, ref: 'column' } }],
+  columns: [{ type: mongoose.Types.ObjectId, ref: 'column' }],
   colorCode: { type: String, default: '#FFFFFF' },
   totalIssueCount: { type: Number, default: 0 },
 });

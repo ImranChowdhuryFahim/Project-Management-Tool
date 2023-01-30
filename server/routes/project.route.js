@@ -90,39 +90,5 @@ const router = express.Router();
  *           type: string
  */
 
-/**
- * @swagger
- * components:
- *    securitySchemes:
- *      ApiKeyAuth:
- *         type: apiKey
- *         in: header
- *         name: auth-token
- */
-
-/**
- * @swagger
- * /api/workspace/{workspaceKey}/projects:
- *   get:
- *     summary: Get workspace projects
- *     tags: [Workspace]
- *     security:
- *        - ApiKeyAuth: []
- *     responses:
- *       200:
- *         description: Successfully Retrieved workspace projects
- *       404:
- *         description: Conflict
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                  message:
- *                     type: string
- *               example:
- *                  message: not found
- */
 router.route('/api/workspace/:workspaceKey/project').post(authenticate, validate(validation.projectPayload), controller.createProject);
-router.route('/api/workspace/:workspaceKey/projects').get(authenticate, controller.createProject);
 module.exports = router;

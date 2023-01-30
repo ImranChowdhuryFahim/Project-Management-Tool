@@ -1,38 +1,59 @@
-const { UserRepository, WorkspaceRepository, ProjectRepository } = require('../database');
+const {
+  ColumnRepository, BoardRepository, IssueRepository,
+} = require('../database');
 
-const userRepository = new UserRepository();
-const workspaceRepository = new WorkspaceRepository();
-const projectRepository = new ProjectRepository();
+const boardRepostiory = new BoardRepository();
+const columnRepository = new ColumnRepository();
+const issueRepostiory = new IssueRepository();
 
 module.exports = {
 
-  createProject: async (req, res) => {
+  createColumn: async (req, res) => {
+    const { boardId, title } = req.body;
+    const board = await boardRepostiory.findBoardById({ boardId });
+    if (!board) return res.status(404).json({ message: 'not found' });
+    const column = await columnRepository.createColumn({
+      boardId,
+      title,
+      order: board.columns.length + 1,
+    });
+    return res.status(200).json({ message: 'successfully created column', columnId: column._id });
+  },
+
+  switchIssue: async (req, res) => {
     const {
-      workspaceId, title, description, key,
+      issueId, order, fromColumnId, toColumnId,
     } = req.body;
 
-    const workspace = await workspaceRepository.findWorkspaceById({ _id: workspaceId });
+    await issueRepostiory.changeOrder({ issueId, order });
+    await columnRepository.switchIssue({ issueId, fromColumnId, toColumnId });
 
-    if (!workspace) return res.status(404).json({ message: 'workspace not found' });
+    return res.status(200).json({ message: 'switched issue successfully' });
+  },
 
-    const alreadyExit = await projectRepository.findDuplicatePoject({ workspaceId, title, key });
-    if (alreadyExit) return res.status(409).json({ message: 'project already exists' });
+  updateColumn: async (req, res) => {
+    const { columnId, title, order } = req.body;
 
-    const project = await projectRepository.createProject({
-      workspaceId, title, key, description, teamLead: req.user._id,
-    });
+    await columnRepository.updateColumn({ columnId, title, order });
 
-    if (!project) return res.status(500).json({ message: 'could not create the workspace' });
+    return res.status(200).json({ message: 'switched issue successfully' });
+  },
 
-    project.members.push({ member: req.user._id, role: 'TEAM_LEAD' });
+  deleteColumn: async (req, res) => {
+    const { columnId } = req.params;
 
-    await project.save();
-    const user = await userRepository.findUserById({ _id: req.user._id });
+    const column = await columnRepository.findColumnById({ columnId });
+    if (!column) return res.status(404).json({ message: 'not found' });
+    const board = await boardRepostiory.findBoardById({ boardId: column.boardId });
+    if (!board) return res.status(404).json({ message: 'not found' });
+    board.columns.pull({ column: columnId });
+    await board.save();
 
-    user.projects.push({ project: project._id, role: 'TEAM_LEAD' });
-    await user.save();
+    await issueRepostiory.deleteIssuesByColumnId({ columnId });
 
-    return res.status(201).json({ message: 'successfully created project', projectId: project._id });
+    await columnRepository.deleteColumn({ columnId });
+
+    return res.status(200).json({ message: 'successfully deleted column' });
   },
 
 };

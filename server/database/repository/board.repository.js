@@ -16,10 +16,10 @@ class BoardRepository {
 
   async getBoardDetails({ projectKey, workspaceKey }) {
     const board = await BoardModel.findOne({ projectKey, workspaceKey }).populate({
-      path: 'columns.column',
+      path: 'columns',
       select: ['-__v', '-issues._id'],
       populate: {
-        path: 'issues.issue',
+        path: 'issues',
         model: IssueModel,
         select: ['-__v', '-assignee'],
       },

@@ -49,6 +49,21 @@ const issuePayload = Joi.object({
   dueDate: Joi.date(),
 });
 
+const moveIssuePayload = Joi.object({
+  columnId: Joi.string().required(),
+  issueId: Joi.string().required(),
+  fromIndex: Joi.string().required(),
+  toIndex: Joi.string().required(),
+});
+
+const switchIssuePayload = Joi.object({
+  fromColumnId: Joi.string().required(),
+  toColumnId: Joi.string().required(),
+  issueId: Joi.string().required(),
+  fromIndex: Joi.string().required(),
+  toIndex: Joi.string().required(),
+});
+
 module.exports = {
   login,
   signUp,
@@ -57,4 +72,6 @@ module.exports = {
   addMemberPayload,
   projectPayload,
   issuePayload,
+  moveIssuePayload,
+  switchIssuePayload,
 };

@@ -35,13 +35,13 @@ module.exports = {
 
     const board = await boardRepository.createBoard({ projectKey: project.key, workspaceKey, title: `${project.key} board'` });
 
-    const column1 = await columnRepository.createColumn({ title: 'TO DO', order: 1 });
-    const column2 = await columnRepository.createColumn({ title: 'IN PROGRESS', order: 2 });
-    const column3 = await columnRepository.createColumn({ title: 'DONE', order: 3 });
+    const column1 = await columnRepository.createColumn({ title: 'TO DO' });
+    const column2 = await columnRepository.createColumn({ title: 'IN PROGRESS' });
+    const column3 = await columnRepository.createColumn({ title: 'DONE' });
 
-    board.columns.push({ column: column1._id });
-    board.columns.push({ column: column2._id });
-    board.columns.push({ column: column3._id });
+    board.columns.push(column1._id);
+    board.columns.push(column2._id);
+    board.columns.push(column3._id);
 
     await board.save();
 

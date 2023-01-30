@@ -11,6 +11,7 @@ const workspaceRouter = require('./routes/workspace.route');
 const projectRouter = require('./routes/project.route');
 const boardRouter = require('./routes/board.route');
 const isseuRouter = require('./routes/issue.route');
+const columnRouter = require('./routes/column.route');
 
 const PORT = process.env.PORT || 4000;
 
@@ -45,5 +46,6 @@ app.use(workspaceRouter);
 app.use(projectRouter);
 app.use(boardRouter);
 app.use(isseuRouter);
+app.use(columnRouter);
 
 module.exports = app;
