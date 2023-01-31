@@ -3,7 +3,8 @@ const request = require('supertest');
 // eslint-disable-next-line no-unused-vars
 const config = require('./config');
 const app = require('./app');
-
+const token = {"auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2Q4MGVkYWFiZjk3MTFjNWNjMDgwMDYiLCJpYXQiOjE2NzUxMDcyNTJ9.rcxomjI6omuBwBFCWVdzQVNahd8rUVoQ3_SRWI-qhyQ"};
+const invalidToken = {"auth-token": "eyJhbGciO"};
 
 /* Connecting to the database before each test. */
 beforeEach(async () => {
@@ -31,5 +32,40 @@ describe('Login', () => {
     });
     expect(res.statusCode).toBe(404);
     expect(res.body.message).toBe('no such user exists');
+  });
+});
+
+
+
+describe('Profile', () => {
+  it('should successfully get profile info', async () => {
+    const res = await request(app).get('/api/user/profile').set(token);
+    expect(res.statusCode).toBe(200);
+  });
+
+  it('should not get profile info', async () => {
+    const res = await request(app).get('/api/user/profile');
+    expect(res.statusCode).toBe(401);
+    expect(res.body.message).toBe("access denied");
+  });
+});
+
+
+describe('Workspace', () => {
+  it('should successfully get workspace info', async () => {
+    const res = await request(app).get('/api/workspace/WR').set(token);
+    expect(res.statusCode).toBe(200);
+  });
+
+  it('should not get workspace info', async () => {
+    const res = await request(app).get('/api/workspace/WR11').set(token);
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toBe("not found");
+  });
+
+  it('should not get access', async () => {
+    const res = await request(app).get('/api/workspace/WR').set(invalidToken);
+    expect(res.statusCode).toBe(498);
+    expect(res.body.message).toBe("invalid token");
   });
 });
