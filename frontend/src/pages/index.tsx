@@ -1,15 +1,12 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
 import BoardColumn from '@/component/Board/Column';
-
-const inter = Inter({ subsets: ["latin"] });
+import { dummyCardSummary } from "@/data/mockData"
 
 export default function Home() {
   return (
-    <div className="w-4/5 mx-auto mt-10">
-      <BoardColumn />
+    <div className="flex w-4/5 mx-auto mt-10">
+      <BoardColumn title='To Do' cards={dummyCardSummary(10, "To Do")} />
+      <BoardColumn title='In Progress' cards={dummyCardSummary(10, "In Progress")} />
+      <BoardColumn title='Done' cards={dummyCardSummary(10, "Done")} />
     </div>
   );
 }

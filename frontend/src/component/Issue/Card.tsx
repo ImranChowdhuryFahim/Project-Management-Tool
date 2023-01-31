@@ -8,29 +8,26 @@ export interface CardSummary {
   priority: string;
   storyPoint: number;
   issueId: string;
-  endDate: Date;
+  dueDate: Date;
+  status: string;
 }
 
-const dummyData: CardSummary = {
-  title: "Time control is not user friendly. Find a better way for time input",
-  assignee: "Irfanul Hoque",
-  priority: "medium",
-  issueId: "MVL-453",
-  endDate: new Date("Mon Oct 16 2023 18:35:05 GMT+0600 (Bangladesh Standard Time)"),
-  storyPoint: 40,
-};
-
 export default function IssueCard(summary: CardSummary) {
-  const { title, assignee, priority, storyPoint, endDate } = summary;
+  const { title, assignee, priority, storyPoint, dueDate } = summary;
 
   return (
-    <Card className="mb-2 w-72 hover:bg-blue-50">
+    <Card className="mb-2 w-90 hover:bg-blue-50">
       <CardContent>
         <Stack direction="column" spacing={2}>
           <div className="flex">
             <Typography>{title}</Typography>
           </div>
-          <IssueInfo assignee={assignee} priority={priority} storyPoint={storyPoint} endDate={endDate} />
+          <IssueInfo
+            assignee={assignee}
+            priority={priority}
+            storyPoint={storyPoint}
+            dueDate={dueDate}
+          />
         </Stack>
       </CardContent>
     </Card>

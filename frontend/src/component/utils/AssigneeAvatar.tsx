@@ -2,7 +2,6 @@ import { Avatar, Tooltip } from "@mui/material";
 import { useMemo } from "react";
 
 export default function AssigneeAvatar({ name }: { name: string }) {
-  console.log("%c name: ", 'color: orange', name);
   const initial = useMemo(() => {
     const [firstname, ...rest] = name.split(" ");
     const lastname = rest.at(-1);

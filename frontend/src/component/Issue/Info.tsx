@@ -1,19 +1,19 @@
 import { Chip, Typography, Tooltip } from "@mui/material";
-import AssigneeAvatar from "../AssigneeAvatar";
+import AssigneeAvatar from "../utils/AssigneeAvatar";
 import Priority from "./Priority";
 
 export default function IssueInfo({
   priority,
   storyPoint,
   assignee,
-  endDate,
+  dueDate,
 }: {
   priority: string;
   storyPoint: number;
   assignee: string;
-  endDate: Date;
+  dueDate: Date;
 }) {
-  const isDueToday = endDate.toDateString() === new Date().toDateString();
+  const isDueToday = dueDate.toDateString() === new Date().toDateString();
 
   return (
     <div className="flex justify-between">
