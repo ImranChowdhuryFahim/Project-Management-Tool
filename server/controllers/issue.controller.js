@@ -47,10 +47,10 @@ module.exports = {
 
   updateIssue: async (req, res) => {
     const {
-      issueId, title, description, isDone, dueDate,
+      issueId, title, description, isDone, priority, dueDate,
     } = req.body;
     const issue = await issueRepository.updateIssue({
-      issueId, title, description, isDone, dueDate,
+      issueId, title, description, isDone, dueDate, priority,
     });
     return res.status(200).json({ message: 'successfully updated issue' });
   },

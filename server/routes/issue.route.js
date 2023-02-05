@@ -210,7 +210,7 @@ const router = express.Router();
  *         toIndex:
  *           type: number
  */
-router.route('/api/workspace/:workspaceKey/project/:projectKey/board/issue').post(authenticate, validate(validation.issuePayload), controller.createIssue);
+router.route('/api/issue').post(authenticate, validate(validation.issuePayload), controller.createIssue);
 router.route('/api/workspace/:workspaceKey/project/:projectKey/board/issue/:issueKey').get(authenticate, controller.getIssueDetails);
 router.route('/api/issue/move').put(authenticate, validate(validation.moveIssuePayload), controller.moveIssue);
 router.route('/api/issue/switch').put(authenticate, validate(validation.switchIssuePayload), controller.switchIssue);

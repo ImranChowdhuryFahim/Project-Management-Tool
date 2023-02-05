@@ -54,6 +54,7 @@ const IssueSchema = new Schema({
   projectKey: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String },
+  priority: { type: String, default: 'LOW' },
   key: { type: String, required: true },
   isDone: { type: Boolean, default: false },
   dueDate: { type: Date, required: true },

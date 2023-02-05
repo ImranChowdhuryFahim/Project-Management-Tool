@@ -82,7 +82,6 @@ const router = express.Router();
  *     required:
  *        - title
  *        - key
- 
  *     properties:
  *         title:
  *           type: string

@@ -24,10 +24,10 @@ class IssueRepository {
   }
 
   async updateIssue({
-    issueId, title, description, isDone, dueDate,
+    issueId, title, description, isDone, priority, dueDate,
   }) {
     return IssueModel.updateOne({ _id: issueId }, {
-      title, description, isDone, dueDate,
+      title, description, isDone, dueDate, priority,
     });
   }
 

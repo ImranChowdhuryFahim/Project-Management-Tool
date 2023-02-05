@@ -65,6 +65,16 @@ const switchIssuePayload = Joi.object({
   toIndex: Joi.number().required(),
 });
 
+const moveColumnPayload = Joi.object({
+  columnId: Joi.string().required(),
+  fromIndex: Joi.number().required(),
+  toIndex: Joi.number().required(),
+});
+
+const columnPayload = Joi.object({
+  title: Joi.string().required(),
+});
+
 module.exports = {
   login,
   signUp,
@@ -75,4 +85,6 @@ module.exports = {
   issuePayload,
   moveIssuePayload,
   switchIssuePayload,
+  moveColumnPayload,
+  columnPayload,
 };

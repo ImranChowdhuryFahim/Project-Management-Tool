@@ -9,51 +9,61 @@ const issueRepostiory = new IssueRepository();
 module.exports = {
 
   createColumn: async (req, res) => {
-    const { boardId, title } = req.body;
-    const board = await boardRepostiory.findBoardById({ boardId });
+    const { workspaceKey, projectKey } = req.params;
+    const { title } = req.body;
+    const board = await boardRepostiory.findBoard({ workspaceKey, projectKey });
     if (!board) return res.status(404).json({ message: 'not found' });
     const column = await columnRepository.createColumn({
-      boardId,
       title,
       order: board.columns.length + 1,
     });
+    board.columns.push(column);
+    await board.save();
     return res.status(200).json({ message: 'successfully created column', columnId: column._id });
   },
 
-  switchIssue: async (req, res) => {
-    const {
-      issueId, order, fromColumnId, toColumnId,
-    } = req.body;
-
-    await issueRepostiory.changeOrder({ issueId, order });
-    await columnRepository.switchIssue({ issueId, fromColumnId, toColumnId });
-
-    return res.status(200).json({ message: 'switched issue successfully' });
-  },
-
   updateColumn: async (req, res) => {
-    const { columnId, title, order } = req.body;
+    const { columnId } = req.params;
+    const { title } = req.body;
 
-    await columnRepository.updateColumn({ columnId, title, order });
+    await columnRepository.updateColumnTitle({ columnId, title });
 
-    return res.status(200).json({ message: 'switched issue successfully' });
+    return res.status(200).json({ message: 'updated column successfully' });
   },
 
   deleteColumn: async (req, res) => {
-    const { columnId } = req.params;
+    const { columnId, projectKey, workspaceKey } = req.params;
 
     const column = await columnRepository.findColumnById({ columnId });
     if (!column) return res.status(404).json({ message: 'not found' });
-    const board = await boardRepostiory.findBoardById({ boardId: column.boardId });
+    const board = await boardRepostiory.findBoard({ projectKey, workspaceKey });
     if (!board) return res.status(404).json({ message: 'not found' });
-    board.columns.pull({ column: columnId });
+    board.columns.pull(columnId);
     await board.save();
 
-    await issueRepostiory.deleteIssuesByColumnId({ columnId });
+    const issueIds = column.issues;
+    await issueRepostiory.deleteIssues({ issueIds });
 
     await columnRepository.deleteColumn({ columnId });
 
     return res.status(200).json({ message: 'successfully deleted column' });
+  },
+
+  moveColumn: async (req, res) => {
+    const { workspaceKey, projectKey, columnId } = req.params;
+    const {
+      fromIndex, toIndex,
+    } = req.body;
+
+    const board = await boardRepostiory.findBoard({ workspaceKey, projectKey });
+
+    if (!board) return res.status(404).json({ message: 'not found' });
+
+    board.columns.splice(fromIndex, 1);
+    board.columns.splice(toIndex, 0, columnId);
+
+    await board.save();
+    return res.status(200).json({ message: 'successfully moved the column' });
   },
 
 };

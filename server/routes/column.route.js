@@ -21,8 +21,9 @@ const router = express.Router();
  *         name: auth-token
  */
 
-router.route('/api/column').post(authenticate, validate(validation.issuePayload), controller.createColumn);
-router.route('/api/column').put(authenticate, controller.updateColumn);
-router.route('/api/column/:columnId').delete(authenticate, controller.deleteColumn);
+router.route('/api/workspace/:workspaceKey/project/:projectKey/board/column/').post(authenticate, validate(validation.columnPayload), controller.createColumn);
+router.route('/api/workspace/:workspaceKey/project/:projectKey/board/column/:columnId').put(authenticate, validate(validation.columnPayload), controller.updateColumn);
+router.route('/api/workspace/:workspaceKey/project/:projectKey/board/column/:columnId').delete(authenticate, controller.deleteColumn);
+router.route('/api/board/column-move').put(authenticate, validate(validation.moveColumnPayload), controller.moveColumn);
 
 module.exports = router;

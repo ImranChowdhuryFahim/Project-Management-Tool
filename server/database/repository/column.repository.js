@@ -17,12 +17,7 @@ class ColumnRepository {
     return ColumnModel.findOne({ _id: columnId });
   }
 
-  async switchIssue({ issueId, fromColumnId, toColumnId }) {
-    await ColumnModel.updateOne({ _id: fromColumnId }, { $pull: { issues: issueId } });
-    return ColumnModel.updateOne({ _id: toColumnId }, { $push: { issues: issueId } });
-  }
-
-  async updateColumnDescription({ columnId, title }) {
+  async updateColumnTitle({ columnId, title }) {
     return ColumnModel.updateOne({ _id: columnId }, { title });
   }
 
