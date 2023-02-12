@@ -26,7 +26,7 @@ const router = express.Router();
  * /api/workspace/{workspaceKey}/project/{projectKey}/board:
  *   get:
  *     summary: Get Board details
- *     tags: [Workspace]
+ *     tags: [Board]
  *     security:
  *        - ApiKeyAuth: []
  *     parameters:
@@ -46,7 +46,7 @@ const router = express.Router();
  *       200:
  *         description: Successfully retrieved board details
  *       404:
- *         description: Conflict
+ *         description: Not found
  *         content:
  *           application/json:
  *             schema:

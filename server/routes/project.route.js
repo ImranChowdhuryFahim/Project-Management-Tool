@@ -26,7 +26,7 @@ const router = express.Router();
  * /api/workspace/{workspaceKey}/project:
  *   post:
  *     summary: Create a new project
- *     tags: [Workspace]
+ *     tags: [Project]
  *     security:
  *        - ApiKeyAuth: []
  *     parameters:

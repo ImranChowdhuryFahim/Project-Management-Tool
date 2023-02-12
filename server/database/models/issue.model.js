@@ -26,7 +26,7 @@ const { Schema } = mongoose;
  *           type: string
  *         description:
  *           type: string
- *         order:
+ *         priority:
  *           type: number
  *         key:
  *           type: string

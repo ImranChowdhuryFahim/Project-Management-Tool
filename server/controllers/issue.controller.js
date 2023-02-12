@@ -9,9 +9,9 @@ const boardRepository = new BoardRepository();
 module.exports = {
 
   createIssue: async (req, res) => {
-    const { projectKey, workspaceKey } = req.params;
+    const { projectKey, workspaceKey, columnId } = req.params;
     const {
-      columnId, title, description, dueDate,
+      title, description, dueDate,
     } = req.body;
 
     const board = await boardRepository.findBoard({ projectKey, workspaceKey });
@@ -41,13 +41,14 @@ module.exports = {
     const { workspaceKey, projectKey, issueKey } = req.params;
     const issue = await issueRepository.getIssueDetails({ workspaceKey, projectKey, issueKey });
 
-    if (!issue) return res.status(404).json({ message: 'not found' });
+    if (!issue) return res.status(404).json({ message: 'issue not found' });
     return res.status(200).json({ issue });
   },
 
   updateIssue: async (req, res) => {
+    const { issueId } = req.params;
     const {
-      issueId, title, description, isDone, priority, dueDate,
+      title, description, isDone, priority, dueDate,
     } = req.body;
     const issue = await issueRepository.updateIssue({
       issueId, title, description, isDone, dueDate, priority,
@@ -56,13 +57,14 @@ module.exports = {
   },
 
   moveIssue: async (req, res) => {
+    const { issueId } = req.params;
     const {
-      columnId, issueId, fromIndex, toIndex,
+      columnId, fromIndex, toIndex,
     } = req.body;
 
     const column = await columnRepository.findColumnById({ columnId });
 
-    if (!column) return res.status(404).json({ message: 'not found' });
+    if (!column) return res.status(404).json({ message: 'column not found' });
 
     column.issues.splice(fromIndex, 1);
     column.issues.splice(toIndex, 0, issueId);
@@ -72,14 +74,15 @@ module.exports = {
   },
 
   switchIssue: async (req, res) => {
+    const { issueId } = req.params;
     const {
-      fromColumnId, toColumnId, issueId, fromIndex, toIndex,
+      fromColumnId, toColumnId, fromIndex, toIndex,
     } = req.body;
 
     const fromColumn = await columnRepository.findColumnById({ columnId: fromColumnId });
     const toColumn = await columnRepository.findColumnById({ columnId: toColumnId });
 
-    if (!fromColumn || !toColumn) return res.status(404).json({ message: 'not found' });
+    if (!fromColumn || !toColumn) return res.status(404).json({ message: 'column not found' });
 
     fromColumn.issues.splice(fromIndex, 1);
     toColumn.issues.splice(toIndex, 0, issueId);
@@ -88,6 +91,27 @@ module.exports = {
     await toColumn.save();
 
     return res.status(200).json({ message: 'successfully switched issues' });
+  },
+
+  deleteIssue: async (req, res) => {
+    const { boardId, columnId, issueId } = req.params;
+
+    const board = await boardRepository.findBoardById({ boardId });
+
+    if (!board) return res.status(404).json({ message: 'board not found' });
+
+    const column = await columnRepository.findColumnById({ columnId });
+
+    if (!column) return res.status(404).json({ message: 'column not found' });
+
+    column.issues.pull(issueId);
+    await column.save();
+
+    board.totalIssueCount -= 1;
+    await board.save();
+
+    await issueRepository.deleteIssue(issueId);
+    return res.status(200).json({ message: 'successfully deleted issues' });
   },
 
 };

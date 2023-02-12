@@ -44,15 +44,21 @@ const projectPayload = Joi.object({
 });
 
 const issuePayload = Joi.object({
-  columnId: Joi.string().required(),
   title: Joi.string().required(),
   description: Joi.string().required(),
   dueDate: Joi.date(),
 });
 
+const updateIssuePayload = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().required(),
+  isDone: Joi.boolean().required(),
+  priority: Joi.string().required(),
+  dueDate: Joi.date().required(),
+});
+
 const moveIssuePayload = Joi.object({
   columnId: Joi.string().required(),
-  issueId: Joi.string().required(),
   fromIndex: Joi.number().required(),
   toIndex: Joi.number().required(),
 });
@@ -60,13 +66,11 @@ const moveIssuePayload = Joi.object({
 const switchIssuePayload = Joi.object({
   fromColumnId: Joi.string().required(),
   toColumnId: Joi.string().required(),
-  issueId: Joi.string().required(),
   fromIndex: Joi.number().required(),
   toIndex: Joi.number().required(),
 });
 
 const moveColumnPayload = Joi.object({
-  columnId: Joi.string().required(),
   fromIndex: Joi.number().required(),
   toIndex: Joi.number().required(),
 });
@@ -83,6 +87,7 @@ module.exports = {
   addMemberPayload,
   projectPayload,
   issuePayload,
+  updateIssuePayload,
   moveIssuePayload,
   switchIssuePayload,
   moveColumnPayload,

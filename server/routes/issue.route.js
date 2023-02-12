@@ -23,10 +23,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/workspace/{workspaceKey}/project/{projectKey}/board/issue:
+ * /api/workspace/{workspaceKey}/project/{projectKey}/board/column/{columnId}/issue:
  *   post:
  *     summary: create issue
- *     tags: [Workspace]
+ *     tags: [Issue]
  *     security:
  *        - ApiKeyAuth: []
  *     parameters:
@@ -42,6 +42,12 @@ const router = express.Router();
  *              type: string
  *          required: true
  *          description: The project key
+ *        - in: path
+ *          name: columnId
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: The column id
  *     requestBody:
  *       required: true
  *       content:
@@ -66,19 +72,17 @@ const router = express.Router();
  *   createIssue:
  *     type: object
  *     required:
- *        - columnId
  *        - title
  *        - description
  *        - dueDate
  *     properties:
- *         columnId:
- *           type: string
  *         title:
  *           type: string
  *         description:
  *           type: string
  *         dueDate:
- *           type: datetime
+ *           type: string
+ *           format: date
  */
 
 /**
@@ -86,7 +90,7 @@ const router = express.Router();
  * /api/workspace/{workspaceKey}/project/{projectKey}/board/issue/{issueKey}:
  *   get:
  *     summary: get issue details
- *     tags: [Workspace]
+ *     tags: [Issue]
  *     security:
  *        - ApiKeyAuth: []
  *     parameters:
@@ -116,12 +120,19 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/issue/move:
+ * /api/issue/{issueId}/move:
  *   put:
  *     summary: move issue inside a column
  *     tags: [Issue]
  *     security:
  *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: issueId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The issue id
  *     requestBody:
  *       required: true
  *       content:
@@ -147,13 +158,10 @@ const router = express.Router();
  *     type: object
  *     required:
  *        - columnId
- *        - issueId
  *        - fromIndex
  *        - toIndex
  *     properties:
  *         columnId:
- *           type: string
- *         issueId:
  *           type: string
  *         fromIndex:
  *           type: number
@@ -163,12 +171,19 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/issue/switch:
+ * /api/issue/{issueId}/switch:
  *   put:
  *     summary: move issue across column
  *     tags: [Issue]
  *     security:
  *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: issueId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The issue id
  *     requestBody:
  *       required: true
  *       content:
@@ -195,7 +210,6 @@ const router = express.Router();
  *     required:
  *        - toColumnId
  *        - fromColumnId
- *        - issueId
  *        - fromIndex
  *        - toIndex
  *     properties:
@@ -203,16 +217,95 @@ const router = express.Router();
  *           type: string
  *         fromColumnId:
  *           type: string
- *         issueId:
- *           type: string
  *         fromIndex:
  *           type: number
  *         toIndex:
  *           type: number
  */
-router.route('/api/issue').post(authenticate, validate(validation.issuePayload), controller.createIssue);
+
+/**
+ * @swagger
+ * /api/issue/{issueId}:
+ *   put:
+ *     summary: update issue
+ *     tags: [Issue]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: issueId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The issue id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/updateIssue'
+ *     responses:
+ *       200:
+ *         description: Successfully updated issue
+ * definitions:
+ *   updateIssue:
+ *     type: object
+ *     required:
+ *        - title
+ *        - description
+ *        - dueDate
+ *        - isDone
+ *        - priority
+ *     properties:
+ *         title:
+ *           type: string
+ *         description:
+ *           type: string
+ *         dueDate:
+ *           type: string
+ *           format: date
+ *         isDone:
+ *           type: boolean
+ *         priority:
+ *           type: string
+ */
+
+/**
+ * @swagger
+ * /api/board/{boardId}/column/{columnId}/issue/{issueId}:
+ *   delete:
+ *     summary: delete issue
+ *     tags: [Issue]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: boardId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The baord id
+ *        - in: path
+ *          name: columnId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The column id
+ *        - in: path
+ *          name: issueId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The issue id
+ *     responses:
+ *       200:
+ *         description: Successfully deleted issue
+ */
+
+router.route('/api/workspace/:workspaceKey/project/:projectKey/board/column/:columnId/issue').post(authenticate, validate(validation.issuePayload), controller.createIssue);
 router.route('/api/workspace/:workspaceKey/project/:projectKey/board/issue/:issueKey').get(authenticate, controller.getIssueDetails);
-router.route('/api/issue/move').put(authenticate, validate(validation.moveIssuePayload), controller.moveIssue);
-router.route('/api/issue/switch').put(authenticate, validate(validation.switchIssuePayload), controller.switchIssue);
-router.route('/api/issue').put(authenticate, controller.updateIssue);
+router.route('/api/issue/:issueId/move').put(authenticate, validate(validation.moveIssuePayload), controller.moveIssue);
+router.route('/api/issue/:issueId/switch').put(authenticate, validate(validation.switchIssuePayload), controller.switchIssue);
+router.route('/api/issue/:issueId').put(authenticate, validate(validation.updateIssuePayload), controller.updateIssue);
+router.route('/api/board/:boardId/column/:columnId/issue/:issueId').delete(authenticate, controller.deleteIssue);
 module.exports = router;

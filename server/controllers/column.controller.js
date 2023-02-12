@@ -9,13 +9,12 @@ const issueRepostiory = new IssueRepository();
 module.exports = {
 
   createColumn: async (req, res) => {
-    const { workspaceKey, projectKey } = req.params;
+    const { boardId } = req.params;
     const { title } = req.body;
-    const board = await boardRepostiory.findBoard({ workspaceKey, projectKey });
+    const board = await boardRepostiory.findBoardById({ boardId });
     if (!board) return res.status(404).json({ message: 'not found' });
     const column = await columnRepository.createColumn({
       title,
-      order: board.columns.length + 1,
     });
     board.columns.push(column);
     await board.save();
@@ -32,11 +31,11 @@ module.exports = {
   },
 
   deleteColumn: async (req, res) => {
-    const { columnId, projectKey, workspaceKey } = req.params;
+    const { boardId, columnId } = req.params;
 
     const column = await columnRepository.findColumnById({ columnId });
     if (!column) return res.status(404).json({ message: 'not found' });
-    const board = await boardRepostiory.findBoard({ projectKey, workspaceKey });
+    const board = await boardRepostiory.findBoardById({ boardId });
     if (!board) return res.status(404).json({ message: 'not found' });
     board.columns.pull(columnId);
     await board.save();
@@ -50,12 +49,12 @@ module.exports = {
   },
 
   moveColumn: async (req, res) => {
-    const { workspaceKey, projectKey, columnId } = req.params;
+    const { boardId, columnId } = req.params;
     const {
       fromIndex, toIndex,
     } = req.body;
 
-    const board = await boardRepostiory.findBoard({ workspaceKey, projectKey });
+    const board = await boardRepostiory.findBoardById({ boardId });
 
     if (!board) return res.status(404).json({ message: 'not found' });
 
