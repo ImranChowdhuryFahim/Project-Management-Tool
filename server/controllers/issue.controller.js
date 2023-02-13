@@ -21,12 +21,12 @@ module.exports = {
     if (!column) return res.status(404).json({ message: 'column not found' });
 
     const issue = await issueRepository.createIssue({
-      workspaceKey, projectKey, title, description, key: `${projectKey}-${board.totalIssueCount + 1}`, isDone: false, dueDate,
+      workspaceKey, projectKey, title, description, key: `${projectKey}-${board.nextIssueId}`, isDone: false, dueDate,
     });
 
     if (!issue) return res.status(500).json({ message: 'could not create' });
 
-    board.totalIssueCount += 1;
+    board.nextIssueId += 1;
 
     board.save();
 
@@ -107,8 +107,8 @@ module.exports = {
     column.issues.pull(issueId);
     await column.save();
 
-    board.totalIssueCount -= 1;
-    await board.save();
+    // board.totalIssueCount -= 1;
+    // await board.save();
 
     await issueRepository.deleteIssue(issueId);
     return res.status(200).json({ message: 'successfully deleted issues' });

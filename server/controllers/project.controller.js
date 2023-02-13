@@ -20,7 +20,7 @@ module.exports = {
 
     if (!workspace) return res.status(404).json({ message: 'workspace not found' });
 
-    const alreadyExit = await projectRepository.findDuplicatePoject({ workspaceKey, title });
+    const alreadyExit = await projectRepository.findPoject({ workspaceKey, title });
     if (alreadyExit) return res.status(409).json({ message: 'project already exists' });
 
     const project = await projectRepository.createProject({
@@ -52,12 +52,46 @@ module.exports = {
     return res.status(201).json({ message: 'successfully created project', projectId: project._id });
   },
 
-  //   addMember: async (req, res) => {
+  addMember: async (req, res) => {
+    const { projectId } = req.params;
+    const { userId, role } = req.body;
 
-  //   },
+    const project = await projectRepository.findProjectById({ projectId });
+    if (!project) return res.status(404).json({ message: 'project not found' });
 
-  //   updateProject: async (req, res) => {
+    const isAvailableInWorkspace = workspaceRepository.findmember({
+      workspaceKey: project.workspaceKey,
+      userId,
+    });
+    if (!isAvailableInWorkspace) return res.status(404).json({ message: 'user not found inside workspace' });
 
-  //   },
+    project.members.push({ member: userId, role });
+    project.save();
+
+    return res.status(200).json({ message: 'successfully added member to project' });
+  },
+
+  updateProject: async (req, res) => {
+    const { projectId } = req.params;
+    const { title, description } = req.body;
+
+    const project = await projectRepository.findProjectById({ projectId });
+    if (!project) return res.status(404).json({ message: 'project not found' });
+
+    project.title = title;
+    project.description = description;
+    await project.save();
+
+    return res.status(200).json({ message: 'updated project successfully' });
+  },
+
+  getProjectDetails: async (req, res) => {
+    const { workspaceKey, projectKey } = req.params;
+
+    const project = await projectRepository.getProjectDetails({ workspaceKey, projectKey });
+    if (!project) return res.status(404).json({ message: 'project not found' });
+
+    return res.status(200).json({ project });
+  },
 
 };

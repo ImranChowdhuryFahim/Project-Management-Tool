@@ -118,7 +118,7 @@ const router = express.Router();
 /**
  * @swagger
  * /api/workspace/{workspaceKey}/member:
- *   post:
+ *   put:
  *     summary: Add member to workspace
  *     tags: [Workspace]
  *     security:
@@ -138,13 +138,13 @@ const router = express.Router();
  *             $ref: '#/definitions/AddMemberPayload'
  *     responses:
  *       200:
- *         description: The workspace was successfully created
+ *         description: member added successfully
  *         content:
  *           application/json:
  *             example:
- *               message: successfully added workspace
+ *               message: member added successfully
  *       404:
- *         description: Could not process
+ *         description: Not found
  *         content:
  *           application/json:
  *             schema:
@@ -161,15 +161,13 @@ const router = express.Router();
  *        - userId
  *        - role
  *     properties:
- *         workspaceId:
- *           type: string
  *         userId:
  *           type: string
  *         role:
  *           type: string
  */
 router.route('/api/workspace').post(authenticate, validate(validation.workspacePayload), controller.createWorkspace);
-router.route('/api/worKspace/:workspaceKey/member').post(authenticate, validate(validation.addMemberPayload), controller.addMember);
+router.route('/api/worKspace/:workspaceKey/member').put(authenticate, validate(validation.addMemberPayload), controller.addMember);
 router.route('/api/workspace/:workspaceKey').get(authenticate, controller.getWorkspaceDetails);
 
 module.exports = router;

@@ -26,7 +26,7 @@ const { Schema } = mongoose;
  *          type: array
  *         colorCode:
  *          type: string
- *         totalIssueCount:
+ *         nextIssueId:
  *          type: number
  */
 
@@ -53,6 +53,6 @@ const BoardSchema = new Schema({
   workspaceKey: { type: String, required: true },
   columns: [{ type: mongoose.Types.ObjectId, ref: 'column' }],
   colorCode: { type: String, default: '#FFFFFF' },
-  totalIssueCount: { type: Number, default: 0 },
+  nextIssueId: { type: Number, default: 1 },
 });
 module.exports = mongoose.model('board', BoardSchema);

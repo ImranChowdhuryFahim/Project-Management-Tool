@@ -33,7 +33,6 @@ const workspacePayload = Joi.object({
 
 const addMemberPayload = Joi.object({
   userId: Joi.string().required(),
-  workspaceId: Joi.string().required(),
   role: Joi.string().required(),
 });
 
@@ -79,6 +78,11 @@ const columnPayload = Joi.object({
   title: Joi.string().required(),
 });
 
+const updateProject = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().required(),
+});
+
 module.exports = {
   login,
   signUp,
@@ -92,4 +96,5 @@ module.exports = {
   switchIssuePayload,
   moveColumnPayload,
   columnPayload,
+  updateProject,
 };

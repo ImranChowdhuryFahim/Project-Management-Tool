@@ -97,5 +97,139 @@ const router = express.Router();
  *           type: string
  */
 
+/**
+ * @swagger
+ * /api/workspace/{workspaceKey}/project/{projectKey}:
+ *   get:
+ *     summary: Get project details
+ *     tags: [Project]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: workspaceKey
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The workspace key
+ *        - in: path
+ *          name: projectKey
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The project key
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved project details
+ *       404:
+ *         description: Not found
+ */
+
+/**
+ * @swagger
+ * /api/project/{projectId}/member:
+ *   put:
+ *     summary: Add member to project
+ *     tags: [Project]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: projectId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The project id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/AddMemberPayload'
+ *     responses:
+ *       200:
+ *         description: member added successfully
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: member added successfully
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  message:
+ *                     type: string
+ *               example:
+ *                  message: not found
+ * definitions:
+ *   AddMemberPayload:
+ *     type: object
+ *     required:
+ *        - userId
+ *        - role
+ *     properties:
+ *         userId:
+ *           type: string
+ *         role:
+ *           type: string
+ */
+
+/**
+ * @swagger
+ * /api/project/{projectId}:
+ *   put:
+ *     summary: Update project
+ *     tags: [Project]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: projectId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The project id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/updateProject'
+ *     responses:
+ *       200:
+ *         description: successfully updated
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: successfully updated
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  message:
+ *                     type: string
+ *               example:
+ *                  message: not found
+ * definitions:
+ *   updateProject:
+ *     type: object
+ *     required:
+ *        - title
+ *        - description
+ *     properties:
+ *         title:
+ *           type: string
+ *         description:
+ *           type: string
+ */
 router.route('/api/workspace/:workspaceKey/project').post(authenticate, validate(validation.projectPayload), controller.createProject);
+router.route('/api/workspace/:workspaceKey/project/:projectKey').get(authenticate, controller.getProjectDetails);
+router.route('/api/project/:projectId/member').put(authenticate, validate(validation.addMemberPayload), controller.addMember);
+router.route('/api/project/:projectId').put(authenticate, validate(validation.updateProject), controller.updateProject);
 module.exports = router;

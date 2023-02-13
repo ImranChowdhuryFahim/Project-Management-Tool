@@ -38,7 +38,8 @@ module.exports = {
     const board = await boardRepostiory.findBoardById({ boardId });
     if (!board) return res.status(404).json({ message: 'not found' });
     board.columns.pull(columnId);
-    await board.save();
+    // board.totalIssueCount -= column.issues.length;
+    // await board.save();
 
     const issueIds = column.issues;
     await issueRepostiory.deleteIssues({ issueIds });

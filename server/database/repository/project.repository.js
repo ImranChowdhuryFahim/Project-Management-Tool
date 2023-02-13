@@ -8,7 +8,11 @@ class ProjectRepository {
     return ProjectModel.findOne({ key });
   }
 
-  async findDuplicatePoject({ workspaceKey, title }) {
+  async findProjectById({ projectId }) {
+    return ProjectModel.findOne({ _id: projectId });
+  }
+
+  async findPoject({ workspaceKey, title }) {
     return ProjectModel.findOne({ workspaceKey, title });
   }
 
@@ -28,6 +32,11 @@ class ProjectRepository {
   async getProjects({ workspaceKey }) {
     const projects = await ProjectModel.find({ workspaceKey });
     return projects;
+  }
+
+  async getProjectDetails({ workspaceKey, projectKey }) {
+    const project = await ProjectModel.find({ workspaceKey, key: projectKey }).populate('members.member', ['-__v', '-password', '-workspaces', '-projects']);
+    return project;
   }
 }
 

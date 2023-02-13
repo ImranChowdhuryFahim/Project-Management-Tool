@@ -45,10 +45,10 @@ class BoardRepository {
     return board;
   }
 
-  async changeBoardIssueCount({ workspaceKey, projectKey, totalIssueCount }) {
+  async changeBoardIssueCount({ workspaceKey, projectKey, nextIssueId }) {
     const board = await BoardModel.updateOne(
       { workspaceKey, projectKey },
-      { $set: { totalIssueCount } },
+      { $set: { nextIssueId } },
     );
     return board;
   }
