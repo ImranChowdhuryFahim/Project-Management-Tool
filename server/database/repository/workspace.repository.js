@@ -17,7 +17,7 @@ class WorkspaceRepository {
   }
 
   async findmember({ workspaceKey, userId }) {
-    return WorkspaceModel.findOne({ key: workspaceKey, members: { member: userId } });
+    return WorkspaceModel.findOne({ key: workspaceKey, 'members.member': userId });
   }
 
   async findWorkspaceDetailsByKey({ workspaceKey }) {

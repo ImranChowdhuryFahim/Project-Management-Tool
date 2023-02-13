@@ -1,10 +1,13 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-const { IssueRepository, ColumnRepository, BoardRepository } = require('../database');
+const {
+  IssueRepository, ColumnRepository, BoardRepository, ProjectRepository,
+} = require('../database');
 
 const issueRepository = new IssueRepository();
 const columnRepository = new ColumnRepository();
 const boardRepository = new BoardRepository();
+const projectRepository = new ProjectRepository();
 
 module.exports = {
 
@@ -115,11 +118,17 @@ module.exports = {
   },
 
   assignDeveloper: async (req, res) => {
-    const { issueId } = req.params;
+    const { projectId, issueId } = req.params;
     const { userId } = req.body;
+
+    const isMemberOfProject = await projectRepository.findMember({ projectId, userId });
+    if (!isMemberOfProject) return res.status(404).json({ message: 'member not found in project' });
 
     const issue = await issueRepository.findIssueById({ issueId });
     if (!issue) return res.status(200).json({ message: 'issue not found' });
+
+    const assigneeExist = await issueRepository.findAssignee({ issueId, userId });
+    if (assigneeExist) return res.status(409).json({ message: 'assignee already exist' });
 
     issue.assignee.push(userId);
     await issue.save();

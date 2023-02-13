@@ -38,6 +38,10 @@ class ProjectRepository {
     const project = await ProjectModel.find({ workspaceKey, key: projectKey }).populate('members.member', ['-__v', '-password', '-workspaces', '-projects']);
     return project;
   }
+
+  async findMember({ projectId, userId }) {
+    return ProjectModel.findOne({ _id: projectId, 'members.member': userId });
+  }
 }
 
 module.exports = ProjectRepository;

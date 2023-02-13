@@ -41,6 +41,9 @@ module.exports = {
 
     if (!workspace) return res.status(404).json({ message: 'not found' });
 
+    const alreadyExit = await workspaceRepository.findmember({ workspaceKey, userId });
+    if (alreadyExit) return res.status(409).json({ message: 'member already exist' });
+
     workspace.members.push({ member: userId, role });
     await workspace.save();
 
