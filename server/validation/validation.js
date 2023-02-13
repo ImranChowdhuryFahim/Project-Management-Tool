@@ -83,6 +83,10 @@ const updateProject = Joi.object({
   description: Joi.string().required(),
 });
 
+const assignDeveloperPayload = Joi.object({
+  userId: Joi.string().required(),
+});
+
 module.exports = {
   login,
   signUp,
@@ -97,4 +101,5 @@ module.exports = {
   moveColumnPayload,
   columnPayload,
   updateProject,
+  assignDeveloperPayload,
 };

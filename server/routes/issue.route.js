@@ -272,6 +272,40 @@ const router = express.Router();
 
 /**
  * @swagger
+ * /api/issue/{issueId}/assign-developer:
+ *   put:
+ *     summary: assign developer
+ *     tags: [Issue]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: issueId
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The issue id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/assignDeveloper'
+ *     responses:
+ *       200:
+ *         description: Successfully added developer
+ * definitions:
+ *   assignDeveloper:
+ *     type: object
+ *     required:
+ *        - userId
+ *     properties:
+ *         userId:
+ *           type: string
+ */
+
+/**
+ * @swagger
  * /api/board/{boardId}/column/{columnId}/issue/{issueId}:
  *   delete:
  *     summary: delete issue
@@ -306,6 +340,7 @@ router.route('/api/workspace/:workspaceKey/project/:projectKey/board/column/:col
 router.route('/api/workspace/:workspaceKey/project/:projectKey/board/issue/:issueKey').get(authenticate, controller.getIssueDetails);
 router.route('/api/issue/:issueId/move').put(authenticate, validate(validation.moveIssuePayload), controller.moveIssue);
 router.route('/api/issue/:issueId/switch').put(authenticate, validate(validation.switchIssuePayload), controller.switchIssue);
+router.route('/api/issue/:issueId/assign-developer').put(authenticate, validate(validation.assignDeveloperPayload), controller.assignDeveloper);
 router.route('/api/issue/:issueId').put(authenticate, validate(validation.updateIssuePayload), controller.updateIssue);
 router.route('/api/board/:boardId/column/:columnId/issue/:issueId').delete(authenticate, controller.deleteIssue);
 module.exports = router;

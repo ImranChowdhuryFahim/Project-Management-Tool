@@ -114,4 +114,17 @@ module.exports = {
     return res.status(200).json({ message: 'successfully deleted issues' });
   },
 
+  assignDeveloper: async (req, res) => {
+    const { issueId } = req.params;
+    const { userId } = req.body;
+
+    const issue = await issueRepository.findIssueById({ issueId });
+    if (!issue) return res.status(200).json({ message: 'issue not found' });
+
+    issue.assignee.push(userId);
+    await issue.save();
+
+    return res.status(200).json({ message: 'successfully assigned developer' });
+  },
+
 };

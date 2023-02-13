@@ -20,7 +20,7 @@ class IssueRepository {
   }
 
   async getIssueDetails({ workspaceKey, projectKey, issueKey }) {
-    return IssueModel.findOne({ workspaceKey, projectKey, key: issueKey }).select(['-__v']);
+    return IssueModel.findOne({ workspaceKey, projectKey, key: issueKey }).select(['-__v']).populate('assignee', ['-__v', '-password', '-workspaces', '-projects']);
   }
 
   async updateIssue({
@@ -37,6 +37,10 @@ class IssueRepository {
 
   async deleteIssues({ issueIds }) {
     return IssueModel.deleteMany({ _id: { $in: issueIds } });
+  }
+
+  async findIssueById({ issueId }) {
+    return IssueModel.findOne({ _id: issueId });
   }
 
   async findIssue({ workspaceKey, projectKey, issueKey }) {
