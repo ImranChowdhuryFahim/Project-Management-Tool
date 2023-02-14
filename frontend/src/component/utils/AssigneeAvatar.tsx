@@ -3,10 +3,12 @@ import { useMemo } from "react";
 
 export default function AssigneeAvatar({ name }: { name: string }) {
   const initial = useMemo(() => {
-    const [firstname, ...rest] = name.split(" ");
-    const lastname = rest.at(-1);
-    if (!lastname) return firstname[0].toUpperCase();
-    return firstname[0].toUpperCase() + lastname[0].toUpperCase();
+    if (!name) return 'UK';
+    const words = name.split(" ");
+    const firstname = words[1];
+    const lastname = words[words.length - 1];
+    if (words.length === 1) return firstname[0].toUpperCase();
+    return firstname[0].toUpperCase() + lastname?.[0]?.toUpperCase();
   }, [name]);
 
   return (

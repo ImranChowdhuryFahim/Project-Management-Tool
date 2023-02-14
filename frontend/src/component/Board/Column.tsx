@@ -1,13 +1,21 @@
 import type { CardSummary } from "@/component/Issue/Card";
 import { Stack } from "@mui/material";
 import IssueCard from "@/component/Issue/Card";
+import AddIssue from "../Issue/AddIssue";
 
 export interface StageColumn {
   title: string;
+  columnId: string;
+  projectId: string;
   cards: CardSummary[];
 }
 
-export default function BoardColumn({title, cards}: StageColumn) {
+export default function BoardColumn({
+  title,
+  cards,
+  projectId,
+  columnId,
+}: StageColumn) {
   return (
     <div className="px-3 py-2 mx-2 bg-blue-100 rounded-lg w-96">
       <div>
@@ -23,12 +31,13 @@ export default function BoardColumn({title, cards}: StageColumn) {
             priority={data.priority}
             storyPoint={data.storyPoint}
             dueDate={data.dueDate}
-            issueId={data.issueId}
+            issueId={data.key}
             status={data.status}
-            key={data.issueId}
+            key={`${data.key}-${data.title}`}
           />
         ))}
       </Stack>
+      <AddIssue projectId={projectId} columnId={columnId} />
     </div>
   );
 }

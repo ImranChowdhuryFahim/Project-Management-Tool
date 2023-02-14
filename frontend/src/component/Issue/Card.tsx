@@ -7,13 +7,14 @@ export interface CardSummary {
   assignee: string;
   priority: string;
   storyPoint: number;
-  issueId: string;
+  key: string;
   dueDate: Date;
   status: string;
 }
 
-export default function IssueCard(summary: CardSummary) {
-  const { title, assignee, priority, storyPoint, dueDate } = summary;
+export default function IssueCard(summary: any) {
+  const { title, assignee, priority, storyPoint, dueDate, issueId } = summary;
+  console.log('due date', dueDate, typeof dueDate);
 
   return (
     <Card className="mb-2 w-90 hover:bg-blue-50">
@@ -27,6 +28,7 @@ export default function IssueCard(summary: CardSummary) {
             priority={priority}
             storyPoint={storyPoint}
             dueDate={dueDate}
+            issueId={issueId}
           />
         </Stack>
       </CardContent>

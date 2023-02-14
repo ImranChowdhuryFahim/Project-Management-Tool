@@ -7,27 +7,29 @@ export default function IssueInfo({
   storyPoint,
   assignee,
   dueDate,
+  issueId
 }: {
   priority: string;
   storyPoint: number;
   assignee: string;
   dueDate: Date;
+  issueId: string;
 }) {
-  const isDueToday = dueDate.toDateString() === new Date().toDateString();
+  const isDueToday = new Date(dueDate).toDateString() === new Date().toDateString();
 
   return (
     <div className="flex justify-between">
       <div className="flex">
         <Priority priority={priority} />
         <Tooltip
-          title={`${storyPoint} Story Point`}
+          title={`${storyPoint ?? 10} Story Point`}
           componentsProps={{
             tooltip: {
               className: "bg-white text-black border-black border rounded",
             },
           }}
         >
-          <Chip label={storyPoint} size="small" className="rounded" />
+          <Chip label={storyPoint ?? 10} size="small" className="rounded" />
         </Tooltip>
         <AssigneeAvatar name={assignee} />
       </div>
@@ -35,7 +37,7 @@ export default function IssueInfo({
         {isDueToday ? (
           <Chip label="Due Today" size="small" color="error" className="mr-2 rounded" />
         ) : null}
-        <Chip label="MVL-453" size="small" className="rounded" />
+        <Chip label={issueId} size="small" className="rounded" />
       </div>
     </div>
   );
