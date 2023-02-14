@@ -1,7 +1,8 @@
-const { UserRepository, WorkspaceRepository } = require('../database');
+const { UserRepository, WorkspaceRepository, ProjectRepository } = require('../database');
 
 const userRepository = new UserRepository();
 const workspaceRepository = new WorkspaceRepository();
+const projectRepository = new ProjectRepository();
 
 module.exports = {
 
@@ -58,5 +59,14 @@ module.exports = {
 
     return res.status(200).json({ workspace });
   },
+
+  getProjectsList: async (req,res) => {
+    const {workspaceKey} = req.params;
+
+    const projects = await projectRepository.findAllProjects({workspaceKey});
+
+    return res.status(200).json({projects});
+
+  }
 
 };

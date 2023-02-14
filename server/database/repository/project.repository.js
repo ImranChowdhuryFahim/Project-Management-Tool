@@ -16,6 +16,11 @@ class ProjectRepository {
     return ProjectModel.findOne({ workspaceKey, title });
   }
 
+  async findAllProjects({workspaceKey})
+  {
+    return ProjectModel.find({ workspaceKey });
+  }
+
   async createProject({
     workspaceKey, title, key, description, teamLead,
   }) {
