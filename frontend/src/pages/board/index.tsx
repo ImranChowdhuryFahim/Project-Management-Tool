@@ -1,5 +1,5 @@
-import Board from "./[boardID]"
+import ListBoard from "@/component/Board/ListBoard";
 
 export default function AllBoard() {
-    return <Board />
+  return <ListBoard />;
 }

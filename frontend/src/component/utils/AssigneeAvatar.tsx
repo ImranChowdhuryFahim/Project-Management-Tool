@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 export default function AssigneeAvatar({ name }: { name: string }) {
   const initial = useMemo(() => {
-    if (!name) return 'UK';
+    if (!name) return "";
     const words = name.split(" ");
     const firstname = words[1];
     const lastname = words[words.length - 1];
@@ -11,7 +11,7 @@ export default function AssigneeAvatar({ name }: { name: string }) {
     return firstname[0].toUpperCase() + lastname?.[0]?.toUpperCase();
   }, [name]);
 
-  return (
+  return name ? (
     <Tooltip
       title={name}
       componentsProps={{
@@ -24,5 +24,5 @@ export default function AssigneeAvatar({ name }: { name: string }) {
         {initial}
       </Avatar>
     </Tooltip>
-  );
+  ) : null;
 }

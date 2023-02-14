@@ -5,6 +5,7 @@ export default function AddIssue({ projectId, columnId }: any) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("LOW");
 
   const handleAdd = (e: any) => {
     e.preventDefault();
@@ -13,7 +14,8 @@ export default function AddIssue({ projectId, columnId }: any) {
       `http://localhost:4000/api/workspace/WR/project/${projectId}/board/column/${columnId}/issue`,
       {
         title,
-        description: "des",
+        description,
+        priority,
         dueDate: "2023-02-16",
       }
     );
@@ -26,19 +28,29 @@ export default function AddIssue({ projectId, columnId }: any) {
   return (
     <div>
       {show ? (
-        <form className="flex flex-col mt-2" onSubmit={handleAdd}>
+        <form className="flex flex-col my-2" onSubmit={handleAdd}>
           <input
-            className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mt-2"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="title"
           />
           <input
-            className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mt-2"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="description"
           />
+
+          <select
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+            className="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded focus:outline-none focus:bg-white focus:border-purple-500 block w-full py-2 px-4 mt-2"
+          >
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+          </select>
 
           <div className="flex flex-row mt-2">
             <button
@@ -57,7 +69,7 @@ export default function AddIssue({ projectId, columnId }: any) {
         </form>
       ) : (
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-1 px-4 w-full border border-gray-400 rounded shadow"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 w-full border border-gray-400 rounded shadow"
           onClick={() => setShow(true)}
         >
           Add an issue
