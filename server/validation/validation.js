@@ -44,6 +44,7 @@ const projectPayload = Joi.object({
 
 const issuePayload = Joi.object({
   title: Joi.string().required(),
+  priority: Joi.string().required(),
   description: Joi.string().required(),
   dueDate: Joi.date(),
 });

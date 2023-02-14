@@ -14,7 +14,7 @@ module.exports = {
   createIssue: async (req, res) => {
     const { projectKey, workspaceKey, columnId } = req.params;
     const {
-      title, description, dueDate,
+      title, description,priority, dueDate,
     } = req.body;
 
     const board = await boardRepository.findBoard({ projectKey, workspaceKey });
@@ -24,7 +24,7 @@ module.exports = {
     if (!column) return res.status(404).json({ message: 'column not found' });
 
     const issue = await issueRepository.createIssue({
-      workspaceKey, projectKey, title, description, key: `${projectKey}-${board.nextIssueId}`, isDone: false, dueDate,
+      workspaceKey, projectKey, title, description, key: `${projectKey}-${board.nextIssueId}`, isDone: false, dueDate,priority
     });
 
     if (!issue) return res.status(500).json({ message: 'could not create' });

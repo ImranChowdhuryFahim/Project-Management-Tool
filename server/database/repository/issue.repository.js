@@ -5,12 +5,13 @@ const IssueModel = require('../models/issue.model');
 
 class IssueRepository {
   async createIssue({
-    workspaceKey, projectKey, title, description, key, isDone, dueDate,
+    workspaceKey, projectKey, title, description,priority, key, isDone, dueDate,
   }) {
     const issue = new IssueModel({
       workspaceKey,
       projectKey,
       title,
+      priority,
       description,
       key,
       isDone,
