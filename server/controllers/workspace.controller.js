@@ -9,8 +9,11 @@ module.exports = {
   createWorkspace: async (req, res) => {
     const { title, description, key } = req.body;
 
-    const alreadyExit = await workspaceRepository.findWorkspaceByTitle({ title });
-    if (alreadyExit) return res.status(409).json({ message: 'workspace already exists' });
+    const titleExist = await workspaceRepository.findWorkspaceByTitle({ title });
+    if (titleExist) return res.status(409).json({ message: 'title already exists' });
+
+    const keyExist = await workspaceRepository.findWorkspaceByKey({workspaceKey:key})
+    if (keyExist) return res.status(409).json({ message: 'key already exists' });
 
     const workspace = await workspaceRepository.createWorkspace({
       title, key, description, owner: req.user._id,

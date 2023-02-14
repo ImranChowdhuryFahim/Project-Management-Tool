@@ -74,11 +74,14 @@ const router = express.Router();
  *     required:
  *        - title
  *        - description
+ *        - priority
  *        - dueDate
  *     properties:
  *         title:
  *           type: string
  *         description:
+ *           type: string
+ *         priority:
  *           type: string
  *         dueDate:
  *           type: string
