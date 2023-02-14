@@ -49,7 +49,7 @@ const ProjectSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, default: '' },
   key: { type: String, required: true, unique: true },
-  members: [{ member: { type: mongoose.Types.ObjectId, ref: 'user' }, role: { type: String, required: true } }],
+  members: [{ member: { type: mongoose.Types.ObjectId, ref: 'user' }, role: { type: String } }],
   teamLead: { type: mongoose.Types.ObjectId, ref: 'user' },
 
 });

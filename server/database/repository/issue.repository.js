@@ -46,6 +46,10 @@ class IssueRepository {
   async findIssue({ workspaceKey, projectKey, issueKey }) {
     return IssueModel.findOne({ workspaceKey, projectKey, key: issueKey });
   }
+
+  async findAssignee({ issueId, userId }) {
+    return IssueModel.findOne({ _id: issueId, assignee: userId });
+  }
 }
 
 module.exports = IssueRepository;

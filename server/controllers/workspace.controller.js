@@ -1,7 +1,8 @@
-const { UserRepository, WorkspaceRepository } = require('../database');
+const { UserRepository, WorkspaceRepository, ProjectRepository } = require('../database');
 
 const userRepository = new UserRepository();
 const workspaceRepository = new WorkspaceRepository();
+const projectRepository = new ProjectRepository();
 
 module.exports = {
 
@@ -41,6 +42,9 @@ module.exports = {
 
     if (!workspace) return res.status(404).json({ message: 'not found' });
 
+    const alreadyExit = await workspaceRepository.findmember({ workspaceKey, userId });
+    if (alreadyExit) return res.status(409).json({ message: 'member already exist' });
+
     workspace.members.push({ member: userId, role });
     await workspace.save();
 
@@ -55,5 +59,14 @@ module.exports = {
 
     return res.status(200).json({ workspace });
   },
+
+  getProjectsList: async (req,res) => {
+    const {workspaceKey} = req.params;
+
+    const projects = await projectRepository.findAllProjects({workspaceKey});
+
+    return res.status(200).json({projects});
+
+  }
 
 };

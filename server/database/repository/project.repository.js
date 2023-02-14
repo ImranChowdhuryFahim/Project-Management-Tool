@@ -16,6 +16,11 @@ class ProjectRepository {
     return ProjectModel.findOne({ workspaceKey, title });
   }
 
+  async findAllProjects({workspaceKey})
+  {
+    return ProjectModel.find({ workspaceKey });
+  }
+
   async createProject({
     workspaceKey, title, key, description, teamLead,
   }) {
@@ -37,6 +42,10 @@ class ProjectRepository {
   async getProjectDetails({ workspaceKey, projectKey }) {
     const project = await ProjectModel.find({ workspaceKey, key: projectKey }).populate('members.member', ['-__v', '-password', '-workspaces', '-projects']);
     return project;
+  }
+
+  async findMember({ projectId, userId }) {
+    return ProjectModel.findOne({ _id: projectId, 'members.member': userId });
   }
 }
 

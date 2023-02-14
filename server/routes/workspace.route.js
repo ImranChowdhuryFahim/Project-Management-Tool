@@ -117,6 +117,30 @@ const router = express.Router();
 
 /**
  * @swagger
+ * /api/workspace/{workspaceKey}/projects:
+ *   get:
+ *     summary: Get workspace project list
+ *     tags: [Workspace]
+ *     security:
+ *        - ApiKeyAuth: []
+ *     parameters:
+ *        - in: path
+ *          name: workspaceKey
+ *          schema:
+ *             type: string
+ *          required: true
+ *          description: The workspace key
+ *     responses:
+ *       200:
+ *         description: Retrieved workspace project list
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: successfully retrieved
+ */
+
+/**
+ * @swagger
  * /api/workspace/{workspaceKey}/member:
  *   put:
  *     summary: Add member to workspace
@@ -169,5 +193,6 @@ const router = express.Router();
 router.route('/api/workspace').post(authenticate, validate(validation.workspacePayload), controller.createWorkspace);
 router.route('/api/worKspace/:workspaceKey/member').put(authenticate, validate(validation.addMemberPayload), controller.addMember);
 router.route('/api/workspace/:workspaceKey').get(authenticate, controller.getWorkspaceDetails);
+router.route('/api/workspace/:workspaceKey/projects').get(authenticate, controller.getProjectsList);
 
 module.exports = router;

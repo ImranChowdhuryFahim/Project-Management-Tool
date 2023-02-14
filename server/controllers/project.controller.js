@@ -59,14 +59,17 @@ module.exports = {
     const project = await projectRepository.findProjectById({ projectId });
     if (!project) return res.status(404).json({ message: 'project not found' });
 
-    const isAvailableInWorkspace = workspaceRepository.findmember({
+    const isAvailableInWorkspace = await workspaceRepository.findmember({
       workspaceKey: project.workspaceKey,
       userId,
     });
     if (!isAvailableInWorkspace) return res.status(404).json({ message: 'user not found inside workspace' });
 
+    const isMemberOfProject = await projectRepository.findMember({ projectId, userId });
+    if (isMemberOfProject) return res.status(409).json({ message: 'member alreay exist in project' });
+
     project.members.push({ member: userId, role });
-    project.save();
+    await project.save();
 
     return res.status(200).json({ message: 'successfully added member to project' });
   },

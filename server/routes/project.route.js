@@ -230,6 +230,6 @@ const router = express.Router();
  */
 router.route('/api/workspace/:workspaceKey/project').post(authenticate, validate(validation.projectPayload), controller.createProject);
 router.route('/api/workspace/:workspaceKey/project/:projectKey').get(authenticate, controller.getProjectDetails);
-router.route('/api/project/:projectId/member').put(authenticate, validate(validation.addMemberPayload), controller.addMember);
 router.route('/api/project/:projectId').put(authenticate, validate(validation.updateProject), controller.updateProject);
+router.route('/api/project/:projectId/member').put(authenticate, validate(validation.addMemberPayload), controller.addMember);
 module.exports = router;
