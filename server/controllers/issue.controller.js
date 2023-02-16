@@ -37,7 +37,7 @@ module.exports = {
 
     await column.save();
 
-    return res.status(201).json({ message: 'successfully created issue', issueId: issue._id });
+    return res.status(201).json({ message: 'successfully created issue', issueId: issue._id, issueKey: issue.key });
   },
 
   getIssueDetails: async (req, res) => {
