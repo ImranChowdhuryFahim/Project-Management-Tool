@@ -74,6 +74,7 @@ export default function Board() {
             key={col._id}
             projectId={board.projectKey}
             columnId={col._id}
+            setBoard={setBoard}
           />
         ))}
       </DragDropContext>

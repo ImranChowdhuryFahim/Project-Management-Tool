@@ -48,6 +48,15 @@ describe('Profile', () => {
     expect(res.statusCode).toBe(401);
     expect(res.body.message).toBe("access denied");
   });
+
+  it('should successfully update profile info', async () => {
+    const res = await request(app).put('/api/user/profile').set(token).send({
+      displayName: "Majumder",
+      avatarLink: ""
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe("successfully updated user info");
+  });
 });
 
 
@@ -68,4 +77,10 @@ describe('Workspace', () => {
     expect(res.statusCode).toBe(498);
     expect(res.body.message).toBe("invalid token");
   });
+
+  // it('should not get workspace info', async () => {
+  //   const res = await request(app).get('/api/workspace/WR/project/PR1/board').set(token);
+  //   expect(res.statusCode).toBe(200);
+  //   expect(res.body.board.columns.length).toBe(3);
+  // });
 });

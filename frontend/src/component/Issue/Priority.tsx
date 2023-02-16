@@ -5,19 +5,20 @@ import { useMemo } from "react";
 export default function Priority({ priority }: { priority: string }) {
   const title = useMemo(() => {
     switch (priority) {
-      case "high":
+      case "HIGH":
         return "High Priority";
-      case "medium":
+      case "MEDIUM":
         return "Medium Priority";
       default:
         return "Low Priority";
     }
   }, [priority]);
+
   const icon = useMemo(() => {
     switch (priority) {
-      case "high":
+      case "HIGH":
         return <PriorityHigh color="error" className="text-sm" />;
-      case "medium":
+      case "MEDIUM":
         return <DensityMedium color="warning" className="text-sm" />;
       default:
         return <LowPriority color="action" className="text-sm" />;
@@ -42,7 +43,7 @@ export default function Priority({ priority }: { priority: string }) {
         tooltip: { className: styles },
       }}
     >
-      <Avatar className="w-6 h-6 mr-1 text-sm font-bold bg-white border">
+      <Avatar className="w-4 h-4 mr-1 text-sm font-bold bg-white border">
         {icon}
       </Avatar>
     </Tooltip>

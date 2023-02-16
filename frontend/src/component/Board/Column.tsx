@@ -8,6 +8,7 @@ export default function BoardColumn({
   cards,
   projectId,
   columnId,
+  setBoard,
 }: any) {
   return (
     <Droppable droppableId={columnId}>
@@ -36,10 +37,16 @@ export default function BoardColumn({
                 key={card._id}
                 id={card._id}
                 index={index}
+                columnId={columnId}
+                projectId={projectId}
               />
             ))}
           </Stack>
-          <AddIssue projectId={projectId} columnId={columnId} />
+          <AddIssue
+            projectId={projectId}
+            columnId={columnId}
+            setBoard={setBoard}
+          />
         </div>
       )}
     </Droppable>

@@ -1,16 +1,17 @@
 import { reqInstance } from "@/pages/board/[boardID]";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function AddIssue({ projectId, columnId }: any) {
+export default function AddIssue({ projectId, columnId, setBoard }: any) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("LOW");
 
-  const handleAdd = (e: any) => {
+  const handleAdd = async (e: any) => {
     e.preventDefault();
 
-    reqInstance.post(
+    const res = await reqInstance.post(
       `http://localhost:4000/api/workspace/WR/project/${projectId}/board/column/${columnId}/issue`,
       {
         title,
@@ -19,6 +20,22 @@ export default function AddIssue({ projectId, columnId }: any) {
         dueDate: "2023-02-16",
       }
     );
+    console.log("%c res: ", "color: orange", res);
+    console.log("columnId: ", columnId);
+
+    setBoard((board: any) => {
+      const index = board.columns.findIndex((c: any) => c._id === columnId);
+      console.log("%c index: ", "color: orange", index);
+      board.columns[index]?.issues?.push({
+        title,
+        description,
+        priority,
+        dueDate: "2023-02-20",
+        _id: res.data.issueId,
+      });
+
+      return { ...board };
+    });
 
     setTitle("");
     setDescription("");

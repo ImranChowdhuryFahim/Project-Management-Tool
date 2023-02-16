@@ -7,7 +7,7 @@ export default function IssueInfo({
   storyPoint,
   assignee,
   dueDate,
-  issueId
+  issueId,
 }: {
   priority: string;
   storyPoint: number;
@@ -15,7 +15,8 @@ export default function IssueInfo({
   dueDate: Date;
   issueId: string;
 }) {
-  const isDueToday = new Date(dueDate).toDateString() === new Date().toDateString();
+  const isDueToday =
+    new Date(dueDate).toDateString() === new Date().toDateString();
 
   return (
     <div className="flex justify-between">
@@ -35,7 +36,12 @@ export default function IssueInfo({
       </div>
       <div className="flex justify-end">
         {isDueToday ? (
-          <Chip label="Due Today" size="small" color="error" className="mr-2 rounded" />
+          <Chip
+            label="Due Today"
+            size="small"
+            color="error"
+            className="mr-2 rounded"
+          />
         ) : null}
         <Chip label={issueId} size="small" className="rounded" />
       </div>

@@ -19,5 +19,5 @@ mongoose
   });
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log('Sarver Started');
+  console.log('Server Started');
 });
