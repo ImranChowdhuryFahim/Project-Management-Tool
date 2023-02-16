@@ -78,9 +78,9 @@ describe('Workspace', () => {
     expect(res.body.message).toBe("invalid token");
   });
 
-  // it('should not get workspace info', async () => {
-  //   const res = await request(app).get('/api/workspace/WR/project/PR1/board').set(token);
-  //   expect(res.statusCode).toBe(200);
-  //   expect(res.body.board.columns.length).toBe(3);
-  // });
+  it('should not get workspace info', async () => {
+    const res = await request(app).get('/api/workspace/WR/project/PR1/board').set(token);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.board.columns.length).toBe(3);
+  });
 });
