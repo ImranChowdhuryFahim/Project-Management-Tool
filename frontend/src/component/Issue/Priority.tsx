@@ -17,11 +17,11 @@ export default function Priority({ priority }: { priority: string }) {
   const icon = useMemo(() => {
     switch (priority) {
       case "HIGH":
-        return <PriorityHigh color="error" className="text-sm" />;
+        return <PriorityHigh color="error" sx={{ fontSize: 14 }} />;
       case "MEDIUM":
-        return <DensityMedium color="warning" className="text-sm" />;
+        return <DensityMedium color="warning" sx={{ fontSize: 14 }} />;
       default:
-        return <LowPriority color="action" className="text-sm" />;
+        return <LowPriority color="action" sx={{ fontSize: 14 }} />;
     }
   }, [priority]);
 
@@ -43,7 +43,10 @@ export default function Priority({ priority }: { priority: string }) {
         tooltip: { className: styles },
       }}
     >
-      <Avatar className="w-4 h-4 mr-1 text-sm font-bold bg-white border">
+      <Avatar
+        sx={{ width: 24, height: 24, backgroundColor: "white" }}
+        className="mr-1 font-bold border"
+      >
         {icon}
       </Avatar>
     </Tooltip>

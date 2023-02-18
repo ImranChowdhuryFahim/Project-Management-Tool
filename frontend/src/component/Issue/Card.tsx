@@ -12,12 +12,13 @@ export default function IssueCard(summary: any) {
     priority,
     storyPoint,
     dueDate,
-    issueId,
+    issueKey,
     index,
     id,
     columnId,
     projectId,
   } = summary;
+  console.log("%c summary", "color: lime", summary);
 
   const router = useRouter();
   const { boardID: projectKey } = router.query;
@@ -26,15 +27,15 @@ export default function IssueCard(summary: any) {
     <Draggable index={index} draggableId={id} key={id}>
       {(provided) => (
         <Card
-          className="mb-2 w-90 hover:bg-blue-50 cursor-move"
+          className="mb-2 cursor-move w-90 hover:bg-blue-50"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
           <Link
             href={{
-              pathname: `http://localhost:4200/board/${projectKey}/issue/${issueId}`,
-              query: { columnId, projectId, projectKey, issueKey: issueId },
+              pathname: `http://localhost:4200/board/${projectKey}/issue/${issueKey}`,
+              query: { columnId, projectId, projectKey, issueKey },
             }}
           >
             <CardContent>
@@ -47,7 +48,7 @@ export default function IssueCard(summary: any) {
                   priority={priority}
                   storyPoint={storyPoint}
                   dueDate={dueDate}
-                  issueId={issueId}
+                  issueKey={issueKey}
                 />
               </Stack>
             </CardContent>

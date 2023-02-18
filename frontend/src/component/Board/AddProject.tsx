@@ -1,7 +1,7 @@
 import { reqInstance } from "@/pages/board/[boardID]";
 import { useMemo, useState } from "react";
 
-export default function AddProject({ workspaceKey }: { workspaceKey: string }) {
+export default function AddProject({ workspaceKey, setProjects }: any) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -25,6 +25,8 @@ export default function AddProject({ workspaceKey }: { workspaceKey: string }) {
       }
     );
 
+    setProjects((projects: any) => [...projects, { title, key, description }]);
+
     setTitle("");
     setDescription("");
     setShow(false);
@@ -37,24 +39,24 @@ export default function AddProject({ workspaceKey }: { workspaceKey: string }) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="title"
-          className="bg-white appearance-none border-2 mt-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+          className="w-full px-4 py-2 mt-2 leading-tight text-gray-700 bg-white border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
         />
         <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="description"
-          className="bg-white appearance-none border-2 mt-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+          className="w-full px-4 py-2 mt-2 leading-tight text-gray-700 bg-white border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
         />
 
         <div className="flex flex-row mt-2">
           <button
-            className="mr-2 bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-1 w-1/2 border border-red-500 hover:border-transparent rounded"
+            className="w-1/2 py-1 mr-2 font-semibold text-red-700 bg-transparent border border-red-500 rounded hover:bg-red-500 hover:text-white hover:border-transparent"
             onClick={() => setShow(false)}
           >
             Cancel
           </button>
           <button
-            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 w-1/2 border border-blue-500 hover:border-transparent rounded"
+            className="w-1/2 py-1 font-semibold text-blue-700 bg-transparent border border-blue-500 rounded hover:bg-blue-500 hover:text-white hover:border-transparent"
             type="submit"
           >
             Add
@@ -66,7 +68,7 @@ export default function AddProject({ workspaceKey }: { workspaceKey: string }) {
     return (
       <div>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 w-full border border-gray-400 rounded shadow"
+          className="w-full px-4 py-2 mt-2 font-bold text-white bg-blue-500 border border-gray-400 rounded shadow hover:bg-blue-700"
           onClick={() => setShow(true)}
         >
           Create a new project

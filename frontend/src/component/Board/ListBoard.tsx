@@ -17,21 +17,24 @@ export default function ListBoard() {
 
   return (
     <div className="mx-auto my-4 w-96">
-      <h1 className="mb-4 text-4xl text-center font-extrabold leading-none tracking-tight text-gray-900">
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-center text-gray-900">
         List of projects
       </h1>
 
       <div className="">
         {projects.map((project: any) => (
-          <Link href={`http://localhost:4200/board/${project.key}`}>
+          <Link
+            href={`http://localhost:4200/board/${project.key}`}
+            key={project.key}
+          >
             <Card className="p-4 mb-2">
-              <h1 className="font-bold text-xl mb-2">{project.title}</h1>
-              <p className="text-gray-700 text-base">{project.description}</p>
+              <h1 className="mb-2 text-xl font-bold">{project.title}</h1>
+              <p className="text-base text-gray-700">{project.description}</p>
             </Card>
           </Link>
         ))}
       </div>
-      <AddProject workspaceKey={workspaceKey} />
+      <AddProject workspaceKey={workspaceKey} setProjects={setProjects} />
     </div>
   );
 }
