@@ -7,13 +7,13 @@ export default function IssueInfo({
   storyPoint,
   assignee,
   dueDate,
-  issueId,
+  issueKey,
 }: {
   priority: string;
   storyPoint: number;
   assignee: string;
   dueDate: Date;
-  issueId: string;
+  issueKey: string;
 }) {
   const isDueToday =
     new Date(dueDate).toDateString() === new Date().toDateString();
@@ -43,7 +43,7 @@ export default function IssueInfo({
             className="mr-2 rounded"
           />
         ) : null}
-        <Chip label={issueId} size="small" className="rounded" />
+        <Chip label={issueKey} size="small" className="rounded" />
       </div>
     </div>
   );

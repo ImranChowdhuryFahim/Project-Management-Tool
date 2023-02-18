@@ -8,7 +8,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 export const reqInstance = axios.create({
   headers: {
     "auth-token":
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2VhZGRiNmM0OWUzZDU3YjU2NWRlZjYiLCJpYXQiOjE2NzYzMzY1OTd9.mDlMv6sAmTDZcPL8_mfkROrLC6iGgC8LY42X9-m-yOI",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2YwNWZjODkwZDY0MTlmZTY0OGU2OTQiLCJpYXQiOjE2NzY2OTc1Nzh9.Xd3-fds4H9aoeAl7uxdTaNB3edKCwfRVjUen_oDQ-5s",
     accept: "*/*",
   },
 });

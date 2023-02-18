@@ -19,7 +19,7 @@ export default function BoardColumn({
           {...provided.droppableProps}
         >
           <div>
-            <h1 className="mb-2 text-xl font-bold text-center text-indigo-800 uppercase">
+            <h1 className="mb-2 text-xl font-bold text-center text-blue-800 uppercase">
               {title}
             </h1>
           </div>
@@ -32,7 +32,7 @@ export default function BoardColumn({
                 priority={card.priority}
                 storyPoint={card.storyPoint}
                 dueDate={card.dueDate}
-                issueId={card.key}
+                issueKey={card.key}
                 status={card.status}
                 key={card._id}
                 id={card._id}
