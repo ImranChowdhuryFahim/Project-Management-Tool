@@ -3,13 +3,7 @@ import IssueCard from "@/components/Issue/Card";
 import AddIssue from "../Issue/AddIssue";
 import { Droppable } from "react-beautiful-dnd";
 
-export default function BoardColumn({
-  title,
-  cards,
-  projectId,
-  columnId,
-  setBoard,
-}: any) {
+export default function BoardColumn({ title, cards, projectKey, columnId, setBoard }: any) {
   return (
     <Droppable droppableId={columnId}>
       {(provided) => (
@@ -38,13 +32,13 @@ export default function BoardColumn({
                 id={card._id}
                 index={index}
                 columnId={columnId}
-                projectId={projectId}
+                projectKey={projectKey}
               />
             ))}
           </Stack>
           {title.toLowerCase() === "to do" ? (
             <AddIssue
-              projectId={projectId}
+              projectKey={projectKey}
               columnId={columnId}
               setBoard={setBoard}
             />

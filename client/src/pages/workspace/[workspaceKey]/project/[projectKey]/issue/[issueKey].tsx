@@ -25,8 +25,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export default function IssueDetails() {
   const router = useRouter();
-  const { workspaceKey, projectKey, issueKey, columnId, projectId } =
-    router.query;
+  const { workspaceKey, projectKey, issueKey, columnId } = router.query;
+  const projectId = "324";
   const [issueDetail, setIssueDetail]: any = useState({});
 
   const [title, setTitle] = useState("");
@@ -40,10 +40,11 @@ export default function IssueDetails() {
   console.log("%c query: ", "color: yellow", router.query);
   console.log("%c issueDetail", "color: chartreuse", issueDetail);
 
-  const handleDelete = () => {
-    reqInstance.delete(
+  const handleDelete = async () => {
+    const res = await reqInstance.delete(
       `${BASE_API_URL}/api/board/${projectId}/column/${columnId}/issue/${issueDetail._id}`
     );
+    console.log("%c handle delete: ", "color: red", res);
   };
 
   const handleClose = (
@@ -170,13 +171,22 @@ export default function IssueDetails() {
               </select>
             </div>
           </div>
-          <button
-            onClick={handleUpdate}
-            type="submit"
-            className="w-40 py-1 font-semibold text-blue-700 bg-transparent border border-blue-500 rounded hover:bg-blue-500 hover:text-white hover:border-transparent"
-          >
-            Update Issue
-          </button>
+          <div className="flex justify-start mt-4">
+            <button
+              onClick={handleUpdate}
+              type="submit"
+              className="inline-block px-10 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+            >
+              Update Issue
+            </button>
+            <button
+              onClick={handleDelete}
+              type="submit"
+              className="hidden px-10 py-2.5 ml-4 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+            >
+              Delete Issue
+            </button>
+          </div>
           <Snackbar
             open={showSnackbar}
             autoHideDuration={2000}

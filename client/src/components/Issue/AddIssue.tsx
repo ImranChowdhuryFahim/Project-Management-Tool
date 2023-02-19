@@ -3,7 +3,7 @@ import { reqInstance } from "../Board";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function AddIssue({ projectId, columnId, setBoard }: any) {
+export default function AddIssue({ projectKey, columnId, setBoard }: any) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -22,7 +22,7 @@ export default function AddIssue({ projectId, columnId, setBoard }: any) {
     e.preventDefault();
 
     const res = await reqInstance.post(
-      `${BASE_API_URL}/api/workspace/WR/project/${projectId}/board/column/${columnId}/issue`,
+      `${BASE_API_URL}/api/workspace/WR/project/${projectKey}/board/column/${columnId}/issue`,
       {
         title,
         description,
