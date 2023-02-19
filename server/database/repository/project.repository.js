@@ -18,7 +18,7 @@ class ProjectRepository {
 
   async findAllProjects({workspaceKey})
   {
-    return ProjectModel.find({ workspaceKey });
+    return ProjectModel.find({ workspaceKey }).populate('teamLead',['displayName']);
   }
 
   async createProject({

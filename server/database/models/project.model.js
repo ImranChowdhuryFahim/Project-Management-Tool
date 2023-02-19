@@ -52,6 +52,6 @@ const ProjectSchema = new Schema({
   members: [{ member: { type: mongoose.Types.ObjectId, ref: 'user' }, role: { type: String } }],
   teamLead: { type: mongoose.Types.ObjectId, ref: 'user' },
 
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('project', ProjectSchema);

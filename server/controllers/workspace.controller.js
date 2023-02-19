@@ -39,16 +39,19 @@ module.exports = {
 
   addMember: async (req, res) => {
     const { workspaceKey } = req.params;
-    const { userId, role } = req.body;
+    const { email, role } = req.body;
 
     const workspace = await workspaceRepository.findWorkspaceByKey({ workspaceKey });
 
-    if (!workspace) return res.status(404).json({ message: 'not found' });
+    if (!workspace) return res.status(404).json({ message: 'workspace not found' });
 
-    const alreadyExit = await workspaceRepository.findmember({ workspaceKey, userId });
+    const user = await userRepository.findUserByEmail({email,role});
+    if(!user) return res.status(404).json({message: 'user not found'})
+
+    const alreadyExit = await workspaceRepository.findmember({ workspaceKey, userId:user._id });
     if (alreadyExit) return res.status(409).json({ message: 'member already exist' });
 
-    workspace.members.push({ member: userId, role });
+    workspace.members.push({ member: user._id, role });
     await workspace.save();
 
     return res.status(200).json({ message: 'successfully added user' });
