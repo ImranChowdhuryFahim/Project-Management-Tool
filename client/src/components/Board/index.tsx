@@ -74,7 +74,7 @@ export default function Board() {
             title={col.title}
             cards={col.issues}
             key={col._id}
-            projectId={board.projectKey}
+            projectKey={board.projectKey}
             columnId={col._id}
             setBoard={setBoard}
           />

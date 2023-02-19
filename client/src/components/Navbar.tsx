@@ -17,7 +17,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   return (
-    <div className="sticky top-0 z-30 border shadow-md bg-light border-d-gray-300">
+    <div className="sticky top-0 z-30 bg-white border shadow-md border-d-gray-300">
       <>
         <div className="px-2 mx-auto max-w sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between h-16">
@@ -33,7 +33,10 @@ export default function Navbar() {
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                   alt="Your Company"
                 />
-                <Link href="/" className="items-center justify-center px-3 font-bold text-black">
+                <Link
+                  href="/"
+                  className="items-center justify-center px-3 font-bold text-black"
+                >
                   JLACK
                 </Link>
               </div>
@@ -52,7 +55,7 @@ export default function Navbar() {
                 <div>
                   <Menu.Button className="flex text-sm bg-white rounded-full">
                     <span className="sr-only">Open user menu</span>
-                    <UserCircleIcon className="w-6 h-6"/>
+                    <UserCircleIcon className="w-6 h-6" />
                   </Menu.Button>
                 </div>
                 <Transition
