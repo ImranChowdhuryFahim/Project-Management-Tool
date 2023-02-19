@@ -27,7 +27,7 @@ export default function IssueCard(summary: any) {
     <Draggable index={index} draggableId={id} key={id}>
       {(provided) => (
         <Card
-          className="mb-2 cursor-move w-90 hover:bg-blue-50"
+          className="mb-2 bg-white border border-white rounded shadow cursor-move w-90"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -37,11 +37,14 @@ export default function IssueCard(summary: any) {
               pathname: `http://localhost:4200/board/${projectKey}/issue/${issueKey}`,
               query: { columnId, projectId, projectKey, issueKey },
             }}
+            className="cursor-move"
           >
             <CardContent>
               <Stack direction="column" spacing={2}>
                 <div className="flex">
-                  <Typography>{title}</Typography>
+                  <Typography className="font-sans text-sm font-semibold tracking-wide text-gray-700">
+                    {title}
+                  </Typography>
                 </div>
                 <IssueInfo
                   assignee={assignee}

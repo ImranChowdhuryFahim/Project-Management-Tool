@@ -14,12 +14,12 @@ export default function BoardColumn({
     <Droppable droppableId={columnId}>
       {(provided) => (
         <div
-          className="px-3 py-2 mx-2 bg-blue-100 rounded-lg w-96"
+          className="px-3 py-3 mr-4 bg-gray-100 rounded column-width w-96"
           ref={provided.innerRef}
           {...provided.droppableProps}
         >
           <div>
-            <h1 className="mb-2 text-xl font-bold text-center text-blue-800 uppercase">
+            <h1 className="mb-2 font-sans text-sm font-semibold tracking-wide text-gray-700">
               {title}
             </h1>
           </div>
@@ -42,11 +42,13 @@ export default function BoardColumn({
               />
             ))}
           </Stack>
-          <AddIssue
-            projectId={projectId}
-            columnId={columnId}
-            setBoard={setBoard}
-          />
+          {title.toLowerCase() === "to do" ? (
+            <AddIssue
+              projectId={projectId}
+              columnId={columnId}
+              setBoard={setBoard}
+            />
+          ) : null}
         </div>
       )}
     </Droppable>

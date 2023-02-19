@@ -30,7 +30,7 @@ export default function IssueInfo({
             },
           }}
         >
-          <Chip label={storyPoint ?? 10} size="small" className="rounded" />
+          <Chip label={storyPoint ?? 10} size="small" />
         </Tooltip>
         <AssigneeAvatar name={assignee} />
       </div>
@@ -43,7 +43,7 @@ export default function IssueInfo({
             className="mr-2 rounded"
           />
         ) : null}
-        <Chip label={issueKey} size="small" className="rounded" />
+        <Chip label={issueKey} size="small" />
       </div>
     </div>
   );
