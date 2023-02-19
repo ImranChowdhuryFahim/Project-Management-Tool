@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../store";
-import { BASE_URL } from "@/constants";
+import { BASE_API_URL } from "@/constants";
 import BreadCrumb from "@/components/BreadCrumb";
 import classNames from "classnames";
 import Link from "next/link";
@@ -61,7 +61,7 @@ export default function Projects() {
   ];
 
   const fetchProjects =async ()=>{
-    axios.get<Payload>(BASE_URL+`api/workspace/${workspaceKey}/projects`,{
+    axios.get<Payload>(BASE_API_URL+`/api/workspace/${workspaceKey}/projects`,{
         headers: {
           'auth-token':  token 
         },

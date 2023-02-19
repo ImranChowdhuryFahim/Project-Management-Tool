@@ -5,7 +5,7 @@ import axios from "axios";
 import  { AxiosError } from 'axios';
 import Router from 'next/router'
 import { useDispatch } from "react-redux";
-import {BASE_URL} from '../constants'
+import {BASE_API_URL} from '../constants'
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ export default function LoginPage() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const res = await axios.post<Payload>(`${BASE_URL}api/user/login`, {
+      const res = await axios.post<Payload>(`${BASE_API_URL}/api/user/login`, {
         email,
         password,
       });

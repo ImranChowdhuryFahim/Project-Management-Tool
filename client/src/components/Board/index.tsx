@@ -1,4 +1,5 @@
 import BoardColumn from "@/components/Board/Column";
+import { BASE_API_URL } from "@/constants";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -21,7 +22,7 @@ export default function Board() {
 
   useEffect(() => {
     reqInstance
-      .get(`http://localhost:4000/api/workspace/${workspaceKey}/project/${projectKey}/board`)
+      .get(`${BASE_API_URL}/api/workspace/${workspaceKey}/project/${projectKey}/board`)
       .then((data) => setBoard(data.data.board));
   }, []);
 
@@ -30,14 +31,14 @@ export default function Board() {
     console.log("RESULT", result);
 
     if (source.droppableId === destination.droppableId) {
-      reqInstance.put(`http://localhost:4000/api/issue/${draggableId}/move`, {
+      reqInstance.put(`${BASE_API_URL}/api/issue/${draggableId}/move`, {
         columnId: source.droppableId,
         fromIndex: source.index,
         toIndex: destination.index,
       });
     } else {
       reqInstance
-        .put(`http://localhost:4000/api/issue/${draggableId}/switch`, {
+        .put(`${BASE_API_URL}/api/issue/${draggableId}/switch`, {
           fromColumnId: source.droppableId,
           toColumnId: destination.droppableId,
           fromIndex: source.index,

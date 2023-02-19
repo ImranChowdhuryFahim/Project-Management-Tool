@@ -1,3 +1,4 @@
+import { BASE_API_URL } from "@/constants";
 import { reqInstance } from "../Board";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -23,7 +24,7 @@ export default function AddIssue({ projectId, columnId, setBoard }: any) {
     e.preventDefault();
 
     const res = await reqInstance.post(
-      `http://localhost:4000/api/workspace/WR/project/${projectId}/board/column/${columnId}/issue`,
+      `${BASE_API_URL}/api/workspace/WR/project/${projectId}/board/column/${columnId}/issue`,
       {
         title,
         description,

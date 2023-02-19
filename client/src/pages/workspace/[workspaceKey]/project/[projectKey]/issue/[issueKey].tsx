@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { reqInstance } from "@/components/Board";
 import Navbar from "@/components/Navbar";
+import { BASE_API_URL } from "@/constants";
 
 export default function IssueDetails() {
   const router = useRouter();
@@ -22,14 +23,14 @@ export default function IssueDetails() {
 
   const handleDelete = () => {
     reqInstance.delete(
-      `http://localhost:4000/api/board/${projectId}/column/${columnId}/issue/${issueDetail._id}`
+      `${BASE_API_URL}/api/board/${projectId}/column/${columnId}/issue/${issueDetail._id}`
     );
   };
 
   useEffect(() => {
     reqInstance
       .get(
-        `http://localhost:4000/api/workspace/${workspaceKey}/project/${projectKey}/board/issue/${issueKey}`
+        `${BASE_API_URL}/api/workspace/${workspaceKey}/project/${projectKey}/board/issue/${issueKey}`
       )
       .then((res: any) => setIssueDetail(res.data.issue));
   }, []);

@@ -1,3 +1,4 @@
+import { BASE_API_URL } from "@/constants";
 import { reqInstance } from ".";
 import { useMemo, useState } from "react";
 
@@ -17,7 +18,7 @@ export default function AddProject({ workspaceKey, setProjects }: any) {
     e.preventDefault();
 
     reqInstance.post(
-      `http://localhost:4000/api/workspace/${workspaceKey}/project`,
+      `${BASE_API_URL}/api/workspace/${workspaceKey}/project`,
       {
         title,
         key,

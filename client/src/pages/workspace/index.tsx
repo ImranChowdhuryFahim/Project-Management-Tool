@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { BASE_URL } from "@/constants";
+import { BASE_API_URL } from "@/constants";
 
 import classNames from "classnames";
 import Link from "next/link";
@@ -51,7 +51,7 @@ export default function Workspace() {
   ];
   const getWorspaces = async () => {
     axios
-      .get<Payload>(BASE_URL + "api/user/workspaces", {
+      .get<Payload>(BASE_API_URL + "api/user/workspaces", {
         headers: {
           "auth-token": token,
         },
@@ -74,10 +74,10 @@ export default function Workspace() {
         <Sidebar menuItems={workapceMenuItems}></Sidebar>
         <div className="h-[calc(100vh-4.1rem)] w-full">
           {/* <BreadCrumb paths={paths}></BreadCrumb> */}
-          <p className="px-6 text-gray-800 font-semibold text-2xl mt-10">
+          <p className="px-6 mt-10 text-2xl font-semibold text-gray-800">
             Workspaces
           </p>
-          <p className="px-6 text-gray-600 text-xl mt-10">List of Workspaces</p>
+          <p className="px-6 mt-10 text-xl text-gray-600">List of Workspaces</p>
           {workspaces && <Table config={config} data={workspaces}></Table>}
         </div>
       </div>
