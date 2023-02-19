@@ -4,11 +4,11 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
+import { store } from "store";
 
 export const reqInstance = axios.create({
   headers: {
-    "auth-token":
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2YxOGRiMWNjYzE0Yzc1Mzc4ODEwN2IiLCJpYXQiOjE2NzY3NzQ4NTZ9.rtYM2CIWchaUuzBgHF1n-cC2R56oS2EuZiA9KYw90p8",
+    "auth-token": store.getState().auth.token,
     accept: "*/*",
   },
 });
@@ -22,7 +22,9 @@ export default function Board() {
 
   useEffect(() => {
     reqInstance
-      .get(`${BASE_API_URL}/api/workspace/${workspaceKey}/project/${projectKey}/board`)
+      .get(
+        `${BASE_API_URL}/api/workspace/${workspaceKey}/project/${projectKey}/board`
+      )
       .then((data) => setBoard(data.data.board));
   }, []);
 
