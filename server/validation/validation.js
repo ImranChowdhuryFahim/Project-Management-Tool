@@ -32,7 +32,7 @@ const workspacePayload = Joi.object({
 });
 
 const addMemberPayload = Joi.object({
-  userId: Joi.string().required(),
+  email: Joi.string().required(),
   role: Joi.string().required(),
 });
 

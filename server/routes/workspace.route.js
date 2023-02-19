@@ -159,7 +159,7 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/definitions/AddMemberPayload'
+ *             $ref: '#/definitions/AddMemberPayload1'
  *     responses:
  *       200:
  *         description: member added successfully
@@ -179,13 +179,13 @@ const router = express.Router();
  *               example:
  *                  message: not found
  * definitions:
- *   AddMemberPayload:
+ *   AddMemberPayload1:
  *     type: object
  *     required:
- *        - userId
+ *        - email
  *        - role
  *     properties:
- *         userId:
+ *         email:
  *           type: string
  *         role:
  *           type: string
