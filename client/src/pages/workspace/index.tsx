@@ -74,7 +74,7 @@ export default function Workspace() {
 
   useEffect(() => {
     if (user && socket) {
-      socket.emit("joinRoom", { rooms: [user._id] });
+      socket.emit("joinRoom", { rooms: [user.email] });
     }
   }, [user]);
 

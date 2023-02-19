@@ -12,9 +12,11 @@ export default function AddWorkspaceMember({workspaceKey}:{workspaceKey: string}
   type Payload = {message: string};
   type ServerError = {message: string};
   const token = useSelector((state:RootState)=>state.auth.token);
+  const currentWorkspace = useSelector((state:RootState)=>state.workspace.currentWorkspace)
   const socket = useSelector((state:RootState)=> state.socket.socket);
 
-  const handleCreate = async()=>{
+  const handleCreate = async(e)=>{
+    e.preventDefault() 
     console.log(email,role,workspaceKey)
 
     setLoading(true);
@@ -30,7 +32,9 @@ export default function AddWorkspaceMember({workspaceKey}:{workspaceKey: string}
       );
       if (res.status == 200 || res.status == 201) {
         setLoading(false);
-        if(socket) socket.emit('notification', {email: email,role:role, type:'AddWorkspaceMember'})
+        if(socket){
+          socket.emit('notification', {email,body:`You have been added to ${currentWorkspace?.title}`})
+        }
         alert(res.data.message);
         
         setEmail("");
@@ -81,7 +85,7 @@ export default function AddWorkspaceMember({workspaceKey}:{workspaceKey: string}
         </div>
 
         <button
-          onClick={()=>{handleCreate()}}
+          onClick={(e)=>{handleCreate(e)}}
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Add Member

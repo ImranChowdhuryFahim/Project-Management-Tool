@@ -6,4 +6,5 @@ module.exports = {
   BoardRepository: require('./repository/board.repository'),
   ColumnRepository: require('./repository/column.repository'),
   IssueRepository: require('./repository/issue.repository'),
+  NotificationRepository: require('./repository/notification.repository'),
 };

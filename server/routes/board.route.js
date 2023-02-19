@@ -3,6 +3,7 @@
 const express = require('express');
 
 const controller = require('../controllers/board.controller');
+const notiController = require('../controllers/notification.controller');
 
 const validation = require('../validation/validation');
 
@@ -58,5 +59,6 @@ const router = express.Router();
  *                  message: not found
  */
 router.route('/api/workspace/:workspaceKey/project/:projectKey/board').get(authenticate, controller.getBoardDetails);
+router.route('/api/notification/:email').get(authenticate, notiController.getNotifications);
 
 module.exports = router;

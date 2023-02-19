@@ -1,3 +1,4 @@
+const { string } = require('joi');
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
@@ -25,8 +26,9 @@ const { Schema } = mongoose;
  */
 
 const NotificationSchema = new Schema({
-  notifyeeId: { type: mongoose.Types.ObjectId, required: true, ref: 'user' },
-  notificationBody: { type: String, required: true },
+  email: { type: String, required: true },
+  body: {type: String, required:true},
+  createdAt : {type: Date, default: Date.now()}
 }, { timestamps: true });
 
 module.exports = mongoose.model('notification', NotificationSchema);

@@ -17,6 +17,12 @@ export default function BoardPage()
           icon: ListIcon,
           link: `/workspace/${workspaceKey}/project/${projectKey}/board`,
         },
+        {
+          id: 2,
+          label: "Add Member",
+          icon: AddUserIcon,
+          link: `/workspace/${workspaceKey}/project/${projectKey}/add-member`,
+        },
       ];
 
     return(
