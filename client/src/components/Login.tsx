@@ -1,20 +1,23 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { setToken } from "../slices/authSlice";
 import axios from "axios";
 import  { AxiosError } from 'axios';
 import Router from 'next/router'
 import { useDispatch } from "react-redux";
 import {BASE_API_URL} from '../constants'
+import io from 'socket.io-client';
+import { setSocket } from "@/slices/socketSlice";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-
   type ServerError = {message: string};
   type Payload = {message:string,token:string};
+
+
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -27,6 +30,8 @@ export default function LoginPage() {
       if (res.status == 200) {
         dispatch(setToken(res.data.token));
         setLoading(false);
+        const socket = io(BASE_API_URL);
+        dispatch(setSocket(socket));
         Router.push('/workspace');
       } 
     } catch (error) {

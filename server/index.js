@@ -2,6 +2,8 @@
 const mongoose = require('mongoose');
 const config = require('./config');
 const app = require('./app');
+const socket = require('socket.io');
+const socketEvents = require('./socketEvents');
 
 const PORT = config.port || 4000;
 mongoose.set('strictQuery', false);
@@ -17,7 +19,15 @@ mongoose
   .catch((err) => {
     throw err;
   });
-app.listen(PORT, () => {
+
+  const corsOptions = {
+    cors: true,
+    origins: ['*'],
+  };
+
+const server = app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log('Server Started');
+  const io = socket(server, corsOptions);
+  socketEvents(io);
 });

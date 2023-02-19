@@ -35,7 +35,7 @@ class ProjectRepository {
   }
 
   async getProjects({ workspaceKey }) {
-    const projects = await ProjectModel.find({ workspaceKey });
+    const projects = await ProjectModel.find({ workspaceKey }).populate('members.member', ['-__v', '-password', '-workspaces', '-projects'])
     return projects;
   }
 

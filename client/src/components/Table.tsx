@@ -1,6 +1,10 @@
+import { Project, setCurrentProject } from "@/slices/projectSlice";
+import { setCurrentWorkspace, Workspace } from "@/slices/workspaceSlice";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import  Router  from "next/router";
+import { use } from "react";
+import { useDispatch } from "react-redux";
 
 export interface workspace{
     title: string,
@@ -12,6 +16,7 @@ export interface workspace{
 
 export interface payload {
     title?: string,
+    _id?:string,
     description?: string,
     role?: string,
     workspace?: workspace,
@@ -37,17 +42,18 @@ export interface config{
     workspaceKey?: string,
 }
 export default function Table({data,config}:{config:config, data:payload[] }) {
+  const dispatch = useDispatch();
 
     console.log(config)
   return (
     <>
       <div className="flex justify-between m-5">
         <div></div>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><Link href={config.name==='Project'? (`/workspace/${config.workspaceKey}/create-project`):(config.url)}> Create {config.name}</Link> </button>
+        <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"><Link href={config.name==='Project'? (`/workspace/${config.workspaceKey}/create-project`):(config.url)}> Create {config.name}</Link> </button>
       </div>
-      <div className="overflow-hidden rounded-lg  m-5">
-        <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 border-b border-b-gray-400">
-          <thead className="bg-gray-50 border-b border-b-gray-400">
+      <div className="m-5 overflow-hidden rounded-lg">
+        <table className="w-full text-sm text-left text-gray-500 bg-white border-b border-collapse border-b-gray-400">
+          <thead className="border-b bg-gray-50 border-b-gray-400">
             <tr>
               {config.headers.map((header, index) => {
                 return (
@@ -62,7 +68,7 @@ export default function Table({data,config}:{config:config, data:payload[] }) {
               })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100 border-t border-gray-100">
+          <tbody className="border-t border-gray-100 divide-y divide-gray-100">
             {data.map((row, index) => {
               return (
                 <>
@@ -72,18 +78,20 @@ export default function Table({data,config}:{config:config, data:payload[] }) {
                     onClick={() => {
                       if(config.name==='Workspace')
                       {
+                        dispatch(setCurrentWorkspace(row.workspace as Workspace));
                         Router.push(`/workspace/${row.workspace?.key}/projects`);
                       }
                       if(config.name==='Project')
                       {
+                        dispatch(setCurrentProject(row))
                         Router.push(`/workspace/${row.workspaceKey}/project/${row.key}/board`);
                       }
                     }}
                   >
-                    <th className="flex gap-3 px-6 py-4 items-center font-normal text-gray-900">
-                      <div className="relative h-10 w-10">
+                    <th className="flex items-center gap-3 px-6 py-4 font-normal text-gray-900">
+                      <div className="relative w-10 h-10">
                         <img
-                          className="h-full w-full "
+                          className="w-full h-full "
                           src="	https://test1704.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10406?size=small"
                           alt=""
                         />
@@ -95,16 +103,6 @@ export default function Table({data,config}:{config:config, data:payload[] }) {
                     <td className="px-6 py-4">{row.workspace?.key || row.key}</td>
                     <td className="px-6 py-4">{row.role || row.teamLead?.displayName}</td> 
                     <td className="px-6 py-4">{row.workspace?.members.length || row.members?.length}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex justify-end gap-4">
-                        <a x-data="{ tooltip: 'Delete' }" href="#">
-                          <TrashIcon className="w-6 h-6" />
-                        </a>
-                        <a x-data="{ tooltip: 'Edit' }" href="#">
-                          <PencilIcon className="w-6 h-6" />
-                        </a>
-                      </div>
-                    </td>
                   </tr>
                 </>
               );

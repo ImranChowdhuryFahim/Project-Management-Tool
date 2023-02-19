@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
 import { store } from "store";
 
 export const reqInstance = axios.create({
@@ -25,7 +26,7 @@ export default function Board() {
       .get(
         `${BASE_API_URL}/api/workspace/${workspaceKey}/project/${projectKey}/board`
       )
-      .then((data) => setBoard(data.data.board));
+      .then((data) => {setBoard(data.data.board);});
   }, []);
 
   const onDragEnd = (result: any) => {

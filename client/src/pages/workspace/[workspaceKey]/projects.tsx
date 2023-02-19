@@ -29,7 +29,7 @@ export default function Projects() {
   const router = useRouter();
   const { workspaceKey } = router.query;
   const paths = ["Workspace", "Projects"]
-  const headers = ["Name", "Key", "Team Lead", "Total Members", ""];
+  const headers = ["Name", "Key", "Team Lead", "Total Members"];
   const token = useSelector((state: RootState) => state.auth.token);
   const dispatch = useDispatch();
   const projects = useSelector((state:RootState)=>state.project.projectList);

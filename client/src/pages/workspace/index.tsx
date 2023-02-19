@@ -14,6 +14,8 @@ import { ListIcon, AddIcon } from "../../components/icons";
 
 import { ListBulletIcon } from "@heroicons/react/20/solid";
 import { setWorkspaceList } from "@/slices/workspaceSlice";
+import { SatelliteAlt } from "@mui/icons-material";
+import { setUserInfo } from "@/slices/userSlice";
 
 export interface Workspace {
   _id: string;
@@ -29,9 +31,11 @@ export interface Payload {
 }
 
 export default function Workspace() {
-  const headers = ["Name", "Key", "Role", "Total Members", ""];
+  const headers = ["Name", "Key", "Role", "Total Members"];
+  const socket = useSelector((state: RootState) => state.socket.socket);
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.auth.token);
+  const user = useSelector((state: RootState) => state.user.user);
   const workspaces = useSelector(
     (state: RootState) => state.workspace.workspaceList
   );
@@ -67,6 +71,38 @@ export default function Workspace() {
       getWorspaces();
     }
   }, [token]);
+
+  useEffect(() => {
+    if (user && socket) {
+      socket.emit("joinRoom", { rooms: [user._id] });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) {
+      axios
+        .get(BASE_API_URL + "/api/user/profile", {
+          headers: {
+            "auth-token": token,
+          },
+        })
+        .then((response) => {
+          dispatch(setUserInfo(response.data.profileDetails));
+        });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("notification", (notification) => {
+        console.log(notification);
+      });
+
+      return () => {
+        socket.off("notification");
+      };
+    }
+  }, []);
   return (
     <>
       <Navbar></Navbar>
