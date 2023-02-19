@@ -22,16 +22,6 @@ export default function IssueInfo({
     <div className="flex justify-between">
       <div className="flex">
         <Priority priority={priority} />
-        <Tooltip
-          title={`${storyPoint ?? 10} Story Point`}
-          componentsProps={{
-            tooltip: {
-              className: "bg-white text-black border-black border rounded",
-            },
-          }}
-        >
-          <Chip label={storyPoint ?? 10} size="small" />
-        </Tooltip>
         <AssigneeAvatar name={assignee} />
       </div>
       <div className="flex justify-end">

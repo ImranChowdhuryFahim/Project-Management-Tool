@@ -6,7 +6,6 @@ import { useState } from "react";
 export default function AddIssue({ projectId, columnId, setBoard }: any) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
-  const [storyPoint, setStoryPoint] = useState(0);
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("LOW");
   const [dueDate, setDueDate] = useState("");
@@ -14,7 +13,6 @@ export default function AddIssue({ projectId, columnId, setBoard }: any) {
   const clearInputs = () => {
     setTitle("");
     setDescription("");
-    setStoryPoint(0);
     setPriority("LOW");
     setDueDate("");
     setShow(false);
@@ -29,7 +27,7 @@ export default function AddIssue({ projectId, columnId, setBoard }: any) {
         title,
         description,
         priority,
-        dueDate: "2023-02-16",
+        dueDate,
       }
     );
 
@@ -39,7 +37,7 @@ export default function AddIssue({ projectId, columnId, setBoard }: any) {
         title,
         description,
         priority,
-        dueDate: "2023-02-20",
+        dueDate,
         _id: res.data.issueId,
         key: res.data.issueKey,
       });
@@ -58,23 +56,16 @@ export default function AddIssue({ projectId, columnId, setBoard }: any) {
             className="w-full px-4 py-2 mt-2 leading-tight text-gray-700 bg-white border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="title"
+            placeholder="Title"
           />
           <input
             className="w-full px-4 py-2 mt-2 leading-tight text-gray-700 bg-white border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="description"
+            placeholder="Description"
           />
 
           <div className="flex justify-between">
-            <input
-              className="w-full px-4 py-2 mt-2 mr-2 leading-tight text-gray-700 bg-white border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
-              value={storyPoint}
-              onChange={(e) => setStoryPoint(+e.target.value)}
-              type="number"
-              placeholder="Story Point"
-            />
             <select
               title="Set priority"
               value={priority}

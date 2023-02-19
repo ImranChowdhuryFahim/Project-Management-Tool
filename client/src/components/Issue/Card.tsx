@@ -35,7 +35,7 @@ export default function IssueCard(summary: any) {
           <Link
             href={{
               pathname: `/workspace/${workspaceKey}/project/${projectKey}/issue/${issueKey}`,
-              query: { columnId, projectId, projectKey, issueKey },
+              query: { columnId, projectId },
             }}
             className="cursor-move"
           >
