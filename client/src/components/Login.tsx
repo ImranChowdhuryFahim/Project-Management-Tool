@@ -44,8 +44,8 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center px-5 py-5">
-        <div className="text-gray-500  w-md ">
+      <div className="flex items-center justify-center min-h-screen px-5 py-5 min-w-screen bg-gray-50 dark:bg-gray-900">
+        <div className="text-gray-500 w-md ">
           <div className="flex justify-center px-5 py-5">
             <a
               href="#"
@@ -59,28 +59,28 @@ export default function LoginPage() {
               JLACK
             </a>
           </div>
-          <div className="md:flex w-full rounded-3xl shadow-xl overflow-hidden">
-            <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
-              <div className="text-center mb-10">
-                <h1 className="font-bold text-3xl text-gray-900">LOGIN</h1>
+          <div className="w-full overflow-hidden shadow-xl md:flex rounded-3xl">
+            <div className="w-full px-5 py-10 md:w-1/2 md:px-10">
+              <div className="mb-10 text-center">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">LOGIN</h1>
                 <p>Enter your information to Login</p>
               </div>
               <div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
-                    <label htmlFor="" className="text-xs font-semibold px-1">
+                    <label htmlFor="" className="px-1 text-xs font-semibold">
                       Email
                     </label>
                     <div className="flex">
-                      <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                        <i className="mdi mdi-email-outline text-gray-400 text-lg"></i>
+                      <div className="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none">
+                        <i className="text-lg text-gray-400 mdi mdi-email-outline"></i>
                       </div>
                       <input
                         type="email"
                         onChange={(e) => {
                           setEmail(e.target.value);
                         }}
-                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        className="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
                         placeholder="johnsmith@example.com"
                       ></input>
                     </div>
@@ -88,33 +88,33 @@ export default function LoginPage() {
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-12">
-                    <label htmlFor="" className="text-xs font-semibold px-1">
+                    <label htmlFor="" className="px-1 text-xs font-semibold">
                       Password
                     </label>
                     <div className="flex">
-                      <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                        <i className="mdi mdi-lock-outline text-gray-400 text-lg"></i>
+                      <div className="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none">
+                        <i className="text-lg text-gray-400 mdi mdi-lock-outline"></i>
                       </div>
                       <input
                         type="password"
                         onChange={(e) => {
                           setPassword(e.target.value);
                         }}
-                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        className="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
                         placeholder="************"
                       ></input>
                     </div>
                   </div>
                 </div>
                 <div className="flex -mx-3">
-                  <div className="w-full px-3 mb-5 items-center">
+                  <div className="items-center w-full px-3 mb-5">
                     <button
                       disabled={loading}
                       onClick={() => {
                         handleSubmit();
                       }}
                       type="button"
-                      className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+                      className="block w-full max-w-xs px-3 py-3 mx-auto font-semibold text-white bg-indigo-500 rounded-lg hover:bg-indigo-700 focus:bg-indigo-700"
                     >
                       {loading ? (
                         <svg
@@ -142,16 +142,16 @@ export default function LoginPage() {
                   </div>
                 </div>
                 <div className="flex -mx-3">
-                  <div className="w-full flex px-3 mb-5">
+                  <div className="flex w-full px-3 mb-5">
                     <p>Do not have an account?</p>
-                    <Link className="px-3 text-black" href={"/register"}>
+                    <Link className="px-3 text-black dark:text-white" href="/register">
                       Register
                     </Link>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="hidden md:block w-1/2 bg-indigo-500 py-10 px-10">
+            <div className="hidden w-1/2 px-10 py-10 bg-indigo-500 md:block">
               <svg
                 id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641"
                 data-name="Layer 1"

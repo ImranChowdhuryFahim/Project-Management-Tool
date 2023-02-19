@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon,UserCircleIcon,UserIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import Link from "next/link";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -16,40 +17,40 @@ function classNames(...classes) {
 
 export default function Navbar() {
   return (
-    <div className="bg-light border border-d-gray-300 sticky top-0 z-30 shadow-md">
+    <div className="sticky top-0 z-30 border shadow-md bg-light border-d-gray-300">
       <>
-        <div className="mx-auto max-w px-2 sm:px-6 lg:px-8">
-          <div className="relative flex h-16 items-center justify-between">
-            <div className="flex flex-1 items-center justify-left sm:items-stretch sm:justify-start">
-              <div className="flex flex-shrink-0 items-center">
+        <div className="px-2 mx-auto max-w sm:px-6 lg:px-8">
+          <div className="relative flex items-center justify-between h-16">
+            <div className="flex items-center flex-1 justify-left sm:items-stretch sm:justify-start">
+              <div className="flex items-center flex-shrink-0">
                 <img
-                  className="block h-8 w-auto lg:hidden"
+                  className="block w-auto h-8 lg:hidden"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                   alt="Your Company"
                 />
                 <img
-                  className="hidden h-8 w-auto lg:block"
+                  className="hidden w-auto h-8 lg:block"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                   alt="Your Company"
                 />
-                <h1 className="text-black font-bold items-center justify-center px-3">
+                <Link href="/" className="items-center justify-center px-3 font-bold text-black">
                   JLACK
-                </h1>
+                </Link>
               </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <button
                 type="button"
-                className=" bg-light  text-black-400 hover:text-black focus:outline-none "
+                className=" bg-light text-black-400 hover:text-black focus:outline-none"
               >
                 <span className="sr-only">View notifications</span>
-                <BellIcon className="h-6 w-6" aria-hidden="true" />
+                <BellIcon className="w-6 h-6" aria-hidden="true" />
               </button>
 
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-3">
                 <div>
-                  <Menu.Button className="flex rounded-full bg-white text-sm">
+                  <Menu.Button className="flex text-sm bg-white rounded-full">
                     <span className="sr-only">Open user menu</span>
                     <UserCircleIcon className="w-6 h-6"/>
                   </Menu.Button>
@@ -63,7 +64,7 @@ export default function Navbar() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <Menu.Item>
                       {({ active }) => (
                         <a
