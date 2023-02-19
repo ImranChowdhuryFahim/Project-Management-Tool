@@ -51,7 +51,7 @@ export default function Workspace() {
   ];
   const getWorspaces = async () => {
     axios
-      .get<Payload>(BASE_API_URL + "api/user/workspaces", {
+      .get<Payload>(BASE_API_URL + "/api/user/workspaces", {
         headers: {
           "auth-token": token,
         },
