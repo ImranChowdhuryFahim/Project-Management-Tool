@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-export interface CounterState {
+export interface AuthState {
   token: string | null
 }
 
-const initialState: CounterState = {
+const initialState: AuthState = {
   token: null,
 }
 

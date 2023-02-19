@@ -9,7 +9,7 @@ export default function BreadCrumb({ paths }: { paths: string[] }) {
             return (
               <>
                 {index != 0 && index != path.length - 1 ? (
-                  <li>
+                  <li key={index}>
                     <div className="flex items-center">
                       <ChevronRightIcon className="h-6 w-6"></ChevronRightIcon>
                       <a
