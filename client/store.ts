@@ -1,11 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from '@/slices/counterSlice'
 import authSlice from '@/slices/authSlice'
+import userSlice from '@/slices/userSlice'
+import projectSlice from '@/slices/projectSlice'
+import workspaceSlice from '@/slices/workspaceSlice'
+import boardSlice from '@/slices/boardSlice'
 
 export const store = configureStore({
   reducer: {
-    counter:counterReducer,
     auth: authSlice,
+    user: userSlice,
+    project: projectSlice,
+    workspace: workspaceSlice,
+    board: boardSlice,
   },
 })
 

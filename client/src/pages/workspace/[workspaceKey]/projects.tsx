@@ -12,13 +12,27 @@ import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ListIcon, AddIcon,AddUserIcon } from "../../../components/icons";
+import { setProjectList } from "@/slices/projectSlice";
+export interface Project{
+  _id: string,
+  title: string,
+  workspaceKey: string,
+  key: string,
+  description: string,
+  members: any[],
+  teamLead: string,
+}
+export interface Payload{
+  projects: Project[]
+}
 export default function Projects() {
   const router = useRouter();
   const { workspaceKey } = router.query;
   const paths = ["Workspace", "Projects"]
   const headers = ["Name", "Key", "Team Lead", "Total Members", ""];
   const token = useSelector((state: RootState) => state.auth.token);
-  const [projects, setProjects] = useState([]);
+  const dispatch = useDispatch();
+  const projects = useSelector((state:RootState)=>state.project.projectList);
   const config = {
     headers: headers,
     name: "Project",
@@ -47,13 +61,17 @@ export default function Projects() {
   ];
 
   const fetchProjects =async ()=>{
-    axios.get(BASE_URL+`api/workspace/${workspaceKey}/projects`,{
+    axios.get<Payload>(BASE_URL+`api/workspace/${workspaceKey}/projects`,{
         headers: {
           'auth-token':  token 
         },
        }).then((response)=>{
         console.log(response.data)
-        setProjects(response.data.projects)
+        if(response.data)
+        {
+          dispatch(setProjectList(response.data.projects))
+        }
+        
        })
   }
 
@@ -76,8 +94,9 @@ export default function Projects() {
 
         <div className="h-[calc(100vh-4.1rem)] w-full">
           <BreadCrumb paths={paths}></BreadCrumb>
-          <p className="px-6 text-gray-600 text-xl mt-10">List of projects</p>
-          {workspaceKey!==null && <Table config={config} data={projects}></Table>}
+          <p className="px-6 mt-10 text-xl text-gray-600">List of projects</p>
+          {}
+          {workspaceKey!==null && projects && <Table config={config} data={projects as Project[]}></Table>}
         </div>
       </div>
     </>
