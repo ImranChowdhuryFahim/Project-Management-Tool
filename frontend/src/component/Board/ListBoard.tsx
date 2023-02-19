@@ -27,9 +27,13 @@ export default function ListBoard() {
             href={`http://localhost:4200/board/${project.key}`}
             key={project.key}
           >
-            <Card className="p-4 mb-2">
-              <h1 className="mb-2 text-xl font-bold">{project.title}</h1>
-              <p className="text-base text-gray-700">{project.description}</p>
+            <Card className="px-4 py-5 mb-2 bg-white border border-white rounded shadow w-90">
+              <h1 className="text-xl font-bold text-gray-900 ">
+                {project.title}
+              </h1>
+              <p className="font-sans text-sm tracking-wide text-gray-700">
+                {project.description}
+              </p>
             </Card>
           </Link>
         ))}

@@ -8,7 +8,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 export const reqInstance = axios.create({
   headers: {
     "auth-token":
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2YwNWZjODkwZDY0MTlmZTY0OGU2OTQiLCJpYXQiOjE2NzY2OTc1Nzh9.Xd3-fds4H9aoeAl7uxdTaNB3edKCwfRVjUen_oDQ-5s",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2YxOGRiMWNjYzE0Yzc1Mzc4ODEwN2IiLCJpYXQiOjE2NzY3NzQ4NTZ9.rtYM2CIWchaUuzBgHF1n-cC2R56oS2EuZiA9KYw90p8",
     accept: "*/*",
   },
 });
@@ -65,7 +65,7 @@ export default function Board() {
   };
 
   return (
-    <div className="flex w-4/5 mx-auto mt-10">
+    <div className="flex w-4/5 min-h-screen py-12 mx-auto mt-10 overflow-x-scroll">
       <DragDropContext onDragEnd={onDragEnd}>
         {board?.columns?.map((col: any) => (
           <BoardColumn
