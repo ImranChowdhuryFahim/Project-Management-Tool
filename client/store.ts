@@ -5,6 +5,7 @@ import projectSlice from '@/slices/projectSlice'
 import workspaceSlice from '@/slices/workspaceSlice'
 import boardSlice from '@/slices/boardSlice'
 import socketSlice from '@/slices/socketSlice'
+import notificationSlice from '@/slices/notificationSlice'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     workspace: workspaceSlice,
     board: boardSlice,
     socket: socketSlice,
+    notification: notificationSlice,
   },
 })
 

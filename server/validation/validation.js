@@ -36,6 +36,11 @@ const addMemberPayload = Joi.object({
   role: Joi.string().required(),
 });
 
+const addProjectMemberPayload = Joi.object({
+  userId: Joi.string().required(),
+  role: Joi.string().required(),
+});
+
 const projectPayload = Joi.object({
   title: Joi.string().required(),
   key: Joi.string().required(),
@@ -103,4 +108,5 @@ module.exports = {
   columnPayload,
   updateProject,
   assignDeveloperPayload,
+  addProjectMemberPayload,
 };

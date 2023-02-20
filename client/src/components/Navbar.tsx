@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { RootState } from "store";
+import { useDispatch } from "react-redux";
+import { addNotification } from "@/slices/notificationSlice";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -21,11 +23,18 @@ function classNames(...classes) {
 export default function Navbar() {
 
   const socket = useSelector((state:RootState)=>state.socket.socket);
+  const user = useSelector((state:RootState)=>state.user.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (socket) {
       socket.on("notification", (notification:any) => {
-        console.log(notification);
+        const {email,body} = notification;
+        if(user?.email===email)
+        {
+          dispatch(addNotification({email,body}))
+        }
+        
       });
 
       return () => {
