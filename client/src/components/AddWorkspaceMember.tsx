@@ -40,6 +40,13 @@ export default function AddWorkspaceMember({
         }
       );
       if (res.status == 200 || res.status == 201) {
+        
+       const wr= await axios.get(BASE_API_URL+`/api/workspace/${workspaceKey}`,{
+          headers: {
+            "auth-token": token,
+          },
+        })
+        dispatch(setCurrentWorkspace(wr.data.workspace));
         setLoading(false);
         if (socket) {
           socket.emit("notification", {
