@@ -22,7 +22,7 @@ export default function BoardColumn({ title, cards, projectKey, columnId, setBoa
             {cards.map((card: any, index: any) => (
               <IssueCard
                 title={card.title}
-                assignee={card.assignee}
+                assignee={card.assignee?.[0]?.displayName}
                 priority={card.priority}
                 storyPoint={card.storyPoint}
                 dueDate={card.dueDate}
