@@ -72,8 +72,8 @@ export default function AddProjectMember({
               "auth-token": token,
             },
           })
-          console.log(p.data.project)
-        dispatch(setCurrentProject(pr.data.project))
+          console.log(pr.data.project)
+        dispatch(setCurrentProject(pr.data.project[0]))
         setLoading(false);
         if(socket){
           socket.emit("notification", {
