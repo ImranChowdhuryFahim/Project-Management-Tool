@@ -59,6 +59,6 @@ const router = express.Router();
  *                  message: not found
  */
 router.route('/api/workspace/:workspaceKey/project/:projectKey/board').get(authenticate, controller.getBoardDetails);
-router.route('/api/notification/:email').get(authenticate, notiController.getNotifications);
+router.route('/api/notification/:userId').get(authenticate, notiController.getNotifications);
 
 module.exports = router;

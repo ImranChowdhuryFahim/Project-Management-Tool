@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const NotificationModel = require('../models/notification.model');
 
 class ProjectRepository {
-  async findNotifications({ email }) {
-    return NotificationModel.find({ email });
+  async findNotifications({ userId }) {
+    return NotificationModel.find({ userId });
   }
 
   async createNotification({

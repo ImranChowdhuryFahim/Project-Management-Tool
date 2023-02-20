@@ -1,13 +1,23 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon,UserCircleIcon,UserIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BellIcon,
+  XMarkIcon,
+  UserCircleIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { RootState } from "store";
 import { useDispatch } from "react-redux";
-import { addNotification } from "@/slices/notificationSlice";
+import {
+  addNotification,
+  clearNotificationCount,
+} from "@/slices/notificationSlice";
+import { Badge } from "@mui/material";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -21,21 +31,20 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-
-  const socket = useSelector((state:RootState)=>state.socket.socket);
-  const user = useSelector((state:RootState)=>state.user.user);
+  const socket = useSelector((state: RootState) => state.socket.socket);
+  const user = useSelector((state: RootState) => state.user.user);
+  const { unreadCount } = useSelector((state: RootState) => state.notification);
   const dispatch = useDispatch();
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     if (socket) {
-      socket.on("notification", (notification:any) => {
-        console.log(notification)
-        const {userId,body} = notification;
-        if(user?._id===userId)
-        {
-          dispatch(addNotification({userId,body}))
+      socket.on("notification", (notification: any) => {
+        console.log(notification);
+        const { userId, body } = notification;
+        if (user?._id === userId) {
+          dispatch(addNotification({ userId, body }));
         }
-        
       });
 
       return () => {
@@ -43,7 +52,7 @@ export default function Navbar() {
       };
     }
   }, []);
-  
+
   return (
     <div className="sticky top-0 z-30 bg-white border shadow-md border-d-gray-300">
       <>
@@ -75,7 +84,16 @@ export default function Navbar() {
                 className=" bg-light text-black-400 hover:text-black focus:outline-none"
               >
                 <span className="sr-only">View notifications</span>
-                <BellIcon className="w-6 h-6" aria-hidden="true" />
+                <Badge
+                  badgeContent={unreadCount}
+                  color="primary"
+                  onClick={() => {
+                    dispatch(clearNotificationCount());
+                    setShowNotification(true);
+                  }}
+                >
+                  <BellIcon className="w-6 h-6" aria-hidden="true" />
+                </Badge>
               </button>
 
               {/* Profile dropdown */}

@@ -16,6 +16,7 @@ import { ListBulletIcon } from "@heroicons/react/20/solid";
 import { setWorkspaceList } from "@/slices/workspaceSlice";
 import { SatelliteAlt } from "@mui/icons-material";
 import { setUserInfo } from "@/slices/userSlice";
+import { setNotifications } from "@/slices/notificationSlice";
 
 export interface Workspace {
   _id: string;
@@ -76,6 +77,16 @@ export default function Workspace() {
     if (user && socket) {
       socket.emit("joinRoom", { rooms: [user.email] });
     }
+    if(user)
+    {
+      axios.get(BASE_API_URL+`/api/notification/${user?._id}`,{
+        headers: {
+          "auth-token": token,
+        },
+      }).then((response)=>{
+        dispatch(setNotifications(response.data.notification))
+      })
+    }
   }, [user]);
 
   useEffect(() => {
@@ -91,6 +102,7 @@ export default function Workspace() {
         });
     }
   }, [user]);
+
 
 
   return (

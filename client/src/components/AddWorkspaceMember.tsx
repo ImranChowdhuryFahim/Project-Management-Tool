@@ -51,8 +51,7 @@ export default function AddWorkspaceMember({
         setLoading(false);
         if (socket) {
           socket.emit("notification", {
-            email,
-            userId: user?._id,
+            userId: res.data.user._id,
             body: `You have been added to ${currentWorkspace?.title}`,
           });
         }

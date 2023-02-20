@@ -23,11 +23,11 @@ export const notificationtSlice = createSlice({
       state.notifications = action.payload;
     },
     addNotification: (state, action: PayloadAction<Notification>) => {
-      if(state.notifications)
-      {
-        state.notifications = [...state.notifications,action.payload]
+
+        const {userId,body} = action.payload;
+        if(state.notifications.length==1)state.notifications = [{userId,body}]
+        else state.notifications = [...state.notifications,{userId,body}]
         state.unreadCount+=1
-      }
         
     },
     clearNotificationCount: (state) => {
@@ -36,6 +36,6 @@ export const notificationtSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setNotifications,addNotification } = notificationtSlice.actions
+export const { setNotifications,addNotification, clearNotificationCount } = notificationtSlice.actions
 
 export default notificationtSlice.reducer

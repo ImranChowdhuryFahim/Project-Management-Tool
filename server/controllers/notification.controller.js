@@ -5,9 +5,9 @@ const notificationRepository = new NotificationRepository()
 module.exports = {
 
   getNotifications: async (req, res) => {
-    const { email } = req.params;
+    const { userId } = req.params;
 
-    const notification = await notificationRepository.findNotifications({ email });
+    const notification = await notificationRepository.findNotifications({ userId });
 
     return res.status(200).json({ notification });
   },
