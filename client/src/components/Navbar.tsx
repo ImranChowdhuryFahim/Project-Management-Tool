@@ -29,10 +29,11 @@ export default function Navbar() {
   useEffect(() => {
     if (socket) {
       socket.on("notification", (notification:any) => {
+        console.log(notification)
         const {userId,body} = notification;
         if(user?._id===userId)
         {
-          dispatch(addNotification({email,body}))
+          dispatch(addNotification({userId,body}))
         }
         
       });

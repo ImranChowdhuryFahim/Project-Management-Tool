@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface Notification{
-  email:string,
+  userId:string,
   body: string
 }
 export interface NotificationState {
