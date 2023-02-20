@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import axios from "axios";
 import { AxiosError } from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { BASE_API_URL } from "@/constants";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { setCurrentProject } from "@/slices/projectSlice";
 
 export default function AddProjectMember({workspaceKey}:{workspaceKey: string}) {
   const [email,setEmail] = useState('');
   const [role, setRole] = useState('');
   const [loading,setLoading] = useState(false);
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const {projectKey} = router.query;
   type Payload = {message: string};
   type ServerError = {message: string};
   const token = useSelector((state:RootState)=>state.auth.token);
@@ -32,6 +38,13 @@ export default function AddProjectMember({workspaceKey}:{workspaceKey: string}) 
         }
       );
       if (res.status == 200 || res.status == 201) {
+
+        const pr= await axios.get(BASE_API_URL+`/api/workspace/${workspaceKey}/project/${projectKey}`,{
+            headers: {
+              "auth-token": token,
+            },
+          })
+        dispatch(setCurrentProject(pr.data.project))
         setLoading(false);
         if(socket){
           socket.emit('notification', {email,body:`You have been added to ${currentProject?.title} project`})
