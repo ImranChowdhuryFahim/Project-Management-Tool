@@ -27,11 +27,11 @@ exports = module.exports = function (io) {
 
     socket.on('notification', async(notificationPayload)=>{
         console.log(notificationPayload);
-        const {email,body} = notificationPayload;
+        const {email,body,userId} = notificationPayload;
         socket.emit('notification',{email,body})
         delete notificationPayload.email;
         delete notificationPayload.type;
-        notificationRepository.createNotification({email,body})
+        notificationRepository.createNotification({userId,body})
         
         
     })

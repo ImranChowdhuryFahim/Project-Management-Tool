@@ -18,6 +18,7 @@ export default function AddWorkspaceMember({
   type Payload = { message: string; user: any };
   type ServerError = { message: string };
   const token = useSelector((state: RootState) => state.auth.token);
+  const user = useSelector((state:RootState)=>state.user.user);
   const currentWorkspace = useSelector(
     (state: RootState) => state.workspace.currentWorkspace
   );
@@ -51,6 +52,7 @@ export default function AddWorkspaceMember({
         if (socket) {
           socket.emit("notification", {
             email,
+            userId: user?._id,
             body: `You have been added to ${currentWorkspace?.title}`,
           });
         }

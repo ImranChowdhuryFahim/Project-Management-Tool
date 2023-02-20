@@ -18,6 +18,7 @@ export default function AddProjectMember({workspaceKey}:{workspaceKey: string}) 
   type Payload = {message: string};
   type ServerError = {message: string};
   const token = useSelector((state:RootState)=>state.auth.token);
+  const user = useSelector((state:RootState)=>state.user.user);
   const currentWorkspace = useSelector((state:RootState)=>state.workspace.currentWorkspace)
   const socket = useSelector((state:RootState)=> state.socket.socket);
   const currentProject = useSelector((state:RootState)=>state.project.currentProject);
@@ -47,7 +48,7 @@ export default function AddProjectMember({workspaceKey}:{workspaceKey: string}) 
         dispatch(setCurrentProject(pr.data.project))
         setLoading(false);
         if(socket){
-          socket.emit('notification', {email,body:`You have been added to ${currentProject?.title} project`})
+          socket.emit('notification', {email,userId:user?._id,body:`You have been added to ${currentProject?.title} project`})
         }
         alert(res.data.message);
         

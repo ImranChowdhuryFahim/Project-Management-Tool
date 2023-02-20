@@ -9,10 +9,10 @@ class ProjectRepository {
   }
 
   async createNotification({
-    email,body
+    userId,body
   }) {
     const notification = new NotificationModel({
-      email,body
+      userId,body
     });
     return notification.save();
   }

@@ -26,7 +26,7 @@ const { Schema } = mongoose;
  */
 
 const NotificationSchema = new Schema({
-  email: { type: String, required: true },
+  userId: { type: String, required: true },
   body: {type: String, required:true},
   createdAt : {type: Date, default: Date.now()}
 }, { timestamps: true });
