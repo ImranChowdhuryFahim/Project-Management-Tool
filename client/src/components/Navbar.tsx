@@ -29,8 +29,8 @@ export default function Navbar() {
   useEffect(() => {
     if (socket) {
       socket.on("notification", (notification:any) => {
-        const {email,body} = notification;
-        if(user?.email===email)
+        const {userId,body} = notification;
+        if(user?._id===userId)
         {
           dispatch(addNotification({email,body}))
         }
