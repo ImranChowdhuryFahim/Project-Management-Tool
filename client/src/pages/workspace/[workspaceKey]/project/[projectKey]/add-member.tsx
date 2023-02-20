@@ -9,6 +9,7 @@ import {
 import { useRouter } from "next/router";
 import BreadCrumb from "@/components/BreadCrumb";
 import AddWorkspaceMember from "@/components/AddWorkspaceMember";
+import AddProjectMember from "@/components/AddProjectMember";
 
 export default function AddProjectMemberPage() {
     const router = useRouter();
@@ -41,7 +42,7 @@ export default function AddProjectMemberPage() {
           <p className="px-6 mt-10 mb-10 text-xl text-gray-600">
             Provide necessary informations to add member to project
           </p>
-          <AddWorkspaceMember workspaceKey={workspaceKey as string}></AddWorkspaceMember>
+          <AddProjectMember workspaceKey={workspaceKey as string}></AddProjectMember>
         </div>
       </div>
     </>

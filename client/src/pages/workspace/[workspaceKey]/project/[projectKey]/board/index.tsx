@@ -24,7 +24,7 @@ export default function BoardPage()
           link: `/workspace/${workspaceKey}/project/${projectKey}/add-member`,
         },
       ];
-
+      
     return(
         <>
         <Navbar></Navbar>

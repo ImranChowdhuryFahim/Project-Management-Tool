@@ -3,6 +3,9 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon,UserCircleIcon,UserIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { RootState } from "store";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -16,6 +19,21 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+
+  const socket = useSelector((state:RootState)=>state.socket.socket);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("notification", (notification:any) => {
+        console.log(notification);
+      });
+
+      return () => {
+        socket.off("notification");
+      };
+    }
+  }, []);
+  
   return (
     <div className="sticky top-0 z-30 bg-white border shadow-md border-d-gray-300">
       <>

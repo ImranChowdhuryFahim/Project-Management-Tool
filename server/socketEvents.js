@@ -17,7 +17,7 @@ exports = module.exports = function (io) {
     console.log('joined ...');
 
     socket.on('joinRoom', (data) => {
-      socket.join(data.rooms);
+      socket.join(data.rooms[0]);
 
       console.log(data.rooms)
       socket.emit('notification', { room: 'bot', notification: 'Welcome dadu' });

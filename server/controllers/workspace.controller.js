@@ -54,7 +54,7 @@ module.exports = {
     workspace.members.push({ member: user._id, role });
     await workspace.save();
 
-    return res.status(200).json({ message: 'successfully added user' });
+    return res.status(200).json({ message: 'successfully added user' ,user: user});
   },
 
   getWorkspaceDetails: async (req, res) => {

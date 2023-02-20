@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 const BoardModel = require('../models/board.model');
 const IssueModel = require('../models/issue.model');
+const UserModel = require('../models/user.model');
 
 class BoardRepository {
   async createBoard({
@@ -21,7 +22,12 @@ class BoardRepository {
       populate: {
         path: 'issues',
         model: IssueModel,
-        select: ['-__v', '-assignee'],
+        select: ['-__v'],
+        populate: {
+          path: 'assignee',
+          model: UserModel,
+          select: ['-password']
+        }
       },
     });
     return board;

@@ -92,17 +92,7 @@ export default function Workspace() {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (socket) {
-      socket.on("notification", (notification) => {
-        console.log(notification);
-      });
 
-      return () => {
-        socket.off("notification");
-      };
-    }
-  }, []);
   return (
     <>
       <Navbar></Navbar>
